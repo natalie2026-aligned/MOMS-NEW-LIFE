@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — GabaDown</title>
+<meta name="description" content="Research, real stories, and honest information for long-term gabapentin users considering a supervised reduction.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{--navy:#0B1628;--navy2:#112240;--teal:#0D9488;--teal2:#2DD4BF;--cream:#F8FAFC;--white:#fff;--text:#0F172A;--text2:#374151;--text3:#6B7280;--border:#E2E8F0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.65}
+nav{padding:1.25rem 2.5rem;display:flex;justify-content:space-between;align-items:center;background:var(--navy);border-bottom:1px solid rgba(45,212,191,0.1)}
+.logo{font-family:'DM Serif Display',serif;font-size:22px;color:#F0F9FF;text-decoration:none}
+.logo span{color:var(--teal2)}
+.nav-links{display:flex;align-items:center;gap:1.5rem}
+.nav-link{color:#94A3B8;font-size:14px;font-weight:500;text-decoration:none;transition:color .2s}
+.nav-link:hover{color:var(--teal2)}
+.nav-link.active{color:var(--teal2)}
+.nav-cta{background:var(--teal);color:white;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none}
+.nav-cta:hover{background:var(--teal2);color:var(--navy)}
+
+.blog-header{background:var(--navy);padding:4rem 2.5rem 3.5rem;border-bottom:1px solid rgba(45,212,191,0.1)}
+.blog-header-inner{max-width:900px;margin:0 auto}
+.blog-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal2);margin-bottom:0.75rem}
+.blog-header h1{font-family:'DM Serif Display',serif;font-size:clamp(28px,4vw,42px);color:#F8FAFC;margin-bottom:0.75rem}
+.blog-header p{font-size:16px;color:#94A3B8;max-width:560px;line-height:1.75}
+
+.blog-body{max-width:900px;margin:0 auto;padding:3.5rem 2.5rem}
+
+.article-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:2rem;margin-bottom:1.25rem;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start;transition:all .2s;text-decoration:none}
+.article-card:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 8px 30px rgba(13,148,136,0.08)}
+.article-card-featured{border-color:rgba(13,148,136,0.3);background:linear-gradient(135deg,#F0FDF4 0%,var(--white) 100%)}
+.article-cat{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;display:inline-block;margin-bottom:0.75rem}
+.cat-story{background:rgba(13,148,136,0.1);color:#0D9488}
+.cat-guide{background:rgba(37,99,235,0.1);color:#2563EB}
+.cat-research{background:rgba(124,58,237,0.1);color:#7C3AED}
+.article-card h2{font-family:'DM Serif Display',serif;font-size:clamp(18px,2.5vw,24px);color:var(--text);margin-bottom:0.6rem;line-height:1.25}
+.article-card p{font-size:14.5px;color:var(--text2);line-height:1.75;margin-bottom:1rem}
+.article-meta-row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.article-meta-item{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3);display:flex;align-items:center;gap:5px}
+.article-meta-item i{font-size:12px;color:var(--teal)}
+.read-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--teal);text-decoration:none}
+.article-card-right{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;min-width:120px;gap:1rem}
+.series-badge{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:#D97706;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;white-space:nowrap;font-family:'IBM Plex Mono',monospace;letter-spacing:0.05em}
+
+.coming-soon{background:var(--navy2);border-radius:16px;padding:2rem;margin-top:2rem;border:1px solid rgba(45,212,191,0.1)}
+.coming-soon h3{font-family:'DM Serif Display',serif;font-size:20px;color:#F0F9FF;margin-bottom:0.75rem}
+.coming-soon p{font-size:14px;color:#94A3B8;line-height:1.7;margin-bottom:1.25rem}
+.coming-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.coming-list li{font-size:14px;color:#64748B;display:flex;align-items:center;gap:8px}
+.coming-list li i{color:var(--teal2);font-size:14px}
+
+footer{background:#060D1A;padding:2.5rem;border-top:1px solid rgba(45,212,191,0.06);margin-top:0}
+.footer-inner{max-width:960px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-logo{font-family:'DM Serif Display',serif;font-size:18px;color:#94A3B8}
+.footer-logo span{color:#2DD4BF}
+.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+.footer-links a{font-size:13.5px;color:#64748B;text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:#2DD4BF}
+.footer-copy{font-size:12px;color:#475569;width:100%;margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid rgba(45,212,191,0.04)}
+
+@media(max-width:768px){
+  nav,.blog-header,.blog-body{padding-left:1.25rem;padding-right:1.25rem}
+  .article-card{grid-template-columns:1fr}
+  .article-card-right{align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">Gaba<span>Down</span></a>
+  <div class="nav-links">
+    <a href="/blog/" class="nav-link active">Blog</a>
+    <a href="/for-healthcare-providers.html" class="nav-link">For Providers</a>
+    <a href="/#apply" class="nav-cta">Get Your Journal</a>
+  </div>
+</nav>
+
+<section class="blog-header">
+  <div class="blog-header-inner">
+    <div class="blog-eyebrow">GabaDown · Blog</div>
+    <h1>Research, real stories, and honest information</h1>
+    <p>Written for long-term gabapentin users, caregivers, and the practitioners who support them. No horror stories. No false promises. Just what the research shows and what the experience actually looks like.</p>
+  </div>
+</section>
+
+<div class="blog-body">
+
+  <!-- Article 1: Mom's story -->
+  <a href="/blog/moms-gabapentin-journey/" class="article-card article-card-featured">
+    <div>
+      <span class="article-cat cat-story">Her Story · Part 1</span>
+      <h2>My Mother's Gabapentin Journey: Eight Years, 2,700mg, and the Decision to Finally Reduce</h2>
+      <p>I built GabaDown because I couldn't find anything for my mother. This is her story — eight years on gabapentin, the cognitive and physical side effects nobody warned her about, and what it felt like to finally have a structured plan and a reason to be hopeful.</p>
+      <div class="article-meta-row">
+        <div class="article-meta-item"><i class="ti ti-user"></i> GabaDown founder</div>
+        <div class="article-meta-item"><i class="ti ti-calendar"></i> June 2026</div>
+        <div class="article-meta-item"><i class="ti ti-clock"></i> 8 min read</div>
+        <span class="read-link">Read the story <i class="ti ti-arrow-right"></i></span>
+      </div>
+    </div>
+    <div class="article-card-right">
+      <span class="series-badge">Ongoing series</span>
+    </div>
+  </a>
+
+  <!-- Article 2: Taper schedule guide -->
+  <a href="/blog/gabapentin-taper-schedule/" class="article-card">
+    <div>
+      <span class="article-cat cat-guide">Clinical Guide</span>
+      <h2>Gabapentin Taper Schedule: A Realistic Guide for Long-Term, High-Dose Users</h2>
+      <p>What a safe, supervised gabapentin taper actually looks like — the timeline, the reduction increments, the evidence behind hyperbolic tapering, and why the standard advice to "just stop slowly" isn't enough for long-term high-dose users.</p>
+      <div class="article-meta-row">
+        <div class="article-meta-item"><i class="ti ti-user"></i> GabaDown</div>
+        <div class="article-meta-item"><i class="ti ti-calendar"></i> June 2026</div>
+        <div class="article-meta-item"><i class="ti ti-clock"></i> 12 min read</div>
+        <span class="read-link">Read the guide <i class="ti ti-arrow-right"></i></span>
+      </div>
+    </div>
+    <div class="article-card-right">
+      <span style="background:rgba(37,99,235,0.1);border:1px solid rgba(37,99,235,0.2);color:#2563EB;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;white-space:nowrap;font-family:'IBM Plex Mono',monospace;letter-spacing:0.05em">Peer-reviewed</span>
+    </div>
+  </a>
+
+  <!-- Coming soon -->
+  <div class="coming-soon">
+    <h3>Coming next</h3>
+    <p>The blog is just getting started. These articles are in progress — each one addresses a question we hear consistently from people navigating this process.</p>
+    <ul class="coming-list">
+      <li><i class="ti ti-clock"></i> Withdrawal or Relapse? How to Tell the Difference During a Gabapentin Taper</li>
+      <li><i class="ti ti-clock"></i> What Is Hyperbolic Tapering — and Does It Apply to Gabapentin?</li>
+      <li><i class="ti ti-clock"></i> The Caregiver's Guide to Supporting Someone Through a Gabapentin Taper</li>
+      <li><i class="ti ti-clock"></i> Mom's Taper Update: Month 1</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Gaba<span>Down</span></div>
+    <div class="footer-links">
+      <a href="mailto:hello@gabadown.com">hello@gabadown.com</a>
+      <a href="/">Home</a>
+      <a href="/#apply">Get Your Journal</a>
+      <a href="/for-healthcare-providers.html">For Providers</a>
+      <a href="/terms.html">Terms</a>
+    </div>
+    <div class="footer-copy">GabaDown is a patient advocacy resource. Not a medical service. © 2026 GabaDown. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
