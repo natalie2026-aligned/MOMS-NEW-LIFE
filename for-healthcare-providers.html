@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Healthcare Providers — GabaDown</title>
+<meta name="description" content="GabaDown is a patient advocacy resource for long-term gabapentin users reducing under medical supervision. Information for referring healthcare providers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+  --navy:#0B1628;--navy2:#112240;--teal:#0D9488;--teal-light:#2DD4BF;--teal-pale:#CCFBF1;
+  --gold:#F59E0B;--cream:#F8FAFC;--white:#FFFFFF;--text:#0F172A;--text2:#475569;--text3:#94A3B8;
+  --border:#E2E8F0;--border2:rgba(13,148,136,0.25);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.65}
+h1,h2,h3,h4{font-family:'DM Serif Display',serif;letter-spacing:-0.3px}
+
+nav{padding:1.25rem 2.5rem;display:flex;justify-content:space-between;align-items:center;background:var(--navy);border-bottom:1px solid rgba(45,212,191,0.1)}
+.logo{font-family:'DM Serif Display',serif;font-size:22px;color:#F0F9FF;text-decoration:none;display:block}
+.logo span{color:var(--teal-light)}
+.nav-cta{background:var(--teal);color:white;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:all .2s}
+.nav-cta:hover{background:var(--teal-light);color:var(--navy)}
+.nav-back{color:#94A3B8;font-size:14px;text-decoration:none;display:flex;align-items:center;gap:6px}
+.nav-back:hover{color:var(--teal-light)}
+
+/* HERO */
+.hero{background:var(--navy);padding:5rem 2.5rem 4rem;border-bottom:1px solid rgba(45,212,191,0.15)}
+.hero-inner{max-width:860px;margin:0 auto}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal-light);background:rgba(45,212,191,0.08);border:1px solid rgba(45,212,191,0.2);padding:6px 16px;border-radius:20px;display:inline-flex;align-items:center;gap:7px;margin-bottom:1.5rem}
+.hero h1{font-size:clamp(28px,4vw,44px);color:#F8FAFC;line-height:1.15;margin-bottom:1rem;max-width:700px}
+.hero-sub{font-size:17px;color:#94A3B8;max-width:600px;line-height:1.8;margin-bottom:2rem}
+.scope-chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{font-size:13px;font-weight:500;padding:7px 16px;border-radius:20px}
+.chip-yes{background:rgba(13,148,136,0.15);color:var(--teal-light);border:1px solid var(--border2)}
+.chip-no{background:rgba(148,163,184,0.1);color:#64748B;border:1px solid rgba(148,163,184,0.2)}
+
+/* SECTIONS */
+.section{padding:4.5rem 2.5rem;border-bottom:1px solid var(--border)}
+.section:nth-child(even){background:var(--white)}
+.section-inner{max-width:860px;margin:0 auto}
+.section-label{font-size:11.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:0.6rem;display:block}
+.section h2{font-size:clamp(24px,3.5vw,32px);margin-bottom:0.75rem;color:var(--text)}
+.section-sub{font-size:16px;color:var(--text2);margin-bottom:2rem;line-height:1.8;max-width:640px}
+
+/* SCOPE CARD */
+.scope-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.scope-card{border-radius:12px;padding:1.25rem 1.5rem;border:1px solid var(--border)}
+.scope-is{background:rgba(13,148,136,0.05);border-color:var(--border2)}
+.scope-not{background:#FAFAFA}
+.scope-card h3{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;display:flex;align-items:center;gap:7px}
+.scope-is h3{color:var(--teal)}
+.scope-not h3{color:#94A3B8}
+.scope-list{list-style:none}
+.scope-list li{font-size:14px;padding:7px 0;border-bottom:1px solid rgba(0,0,0,0.06);color:var(--text2);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.scope-list li:last-child{border-bottom:none}
+.scope-list li i{font-size:14px;margin-top:2px;flex-shrink:0}
+.scope-is .scope-list li i{color:var(--teal)}
+.scope-not .scope-list li i{color:#94A3B8}
+
+/* EVIDENCE TABLE */
+.evidence-table{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:1.5rem}
+.evidence-table th{background:var(--navy);color:var(--teal-light);font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;padding:0.85rem 1rem;text-align:left}
+.evidence-table td{padding:0.9rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text2)}
+.evidence-table td:first-child{font-weight:500;color:var(--text);width:35%}
+.evidence-table tr:last-child td{border-bottom:none}
+.evidence-table tr:nth-child(even) td{background:#FAFAFA}
+
+/* WHAT PATIENT GETS */
+.gets-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:1.5rem}
+.get-item{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;display:flex;gap:10px;align-items:flex-start}
+.get-icon{width:36px;height:36px;background:rgba(13,148,136,0.08);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.get-icon i{color:var(--teal);font-size:18px}
+.get-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px}
+.get-desc{font-size:13px;color:var(--text2);line-height:1.55}
+
+/* HOW REFERRAL WORKS */
+.steps-list{list-style:none;margin-top:1.5rem}
+.step-item{display:flex;gap:16px;align-items:flex-start;padding-bottom:2rem;position:relative}
+.step-item::before{content:'';position:absolute;left:19px;top:42px;bottom:0;width:2px;background:var(--border)}
+.step-item:last-child::before{display:none}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--navy);color:var(--teal-light);font-family:'DM Serif Display',serif;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--border2)}
+.step-body{}
+.step-title{font-weight:600;font-size:15px;color:var(--text);margin-bottom:4px}
+.step-desc{font-size:14px;color:var(--text2);line-height:1.65}
+
+/* REFERRAL FORM */
+.referral-box{background:var(--navy);border-radius:20px;padding:2.5rem;border:1px solid var(--border2)}
+.referral-box h3{font-family:'DM Serif Display',serif;font-size:24px;color:#F0F9FF;margin-bottom:0.5rem}
+.referral-box p{font-size:14.5px;color:#64748B;margin-bottom:1.5rem;line-height:1.7}
+.ref-cta{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:white;padding:15px 32px;border-radius:10px;font-size:16px;font-weight:600;text-decoration:none;transition:all .2s}
+.ref-cta:hover{background:var(--teal-light);color:var(--navy)}
+.ref-note{font-size:13px;color:#334155;margin-top:1rem;line-height:1.7}
+
+/* DISCLAIMER */
+.disclaimer-pro{background:var(--navy);padding:3rem 2.5rem;border-top:1px solid rgba(45,212,191,0.1)}
+.disclaimer-pro-inner{max-width:860px;margin:0 auto}
+.disclaimer-pro p{font-size:13px;color:#94A3B8;line-height:1.8;margin-bottom:0.75rem}
+
+footer{background:#060D1A;padding:2rem 2.5rem;border-top:1px solid rgba(45,212,191,0.08)}
+.footer-inner{max-width:860px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-logo{font-family:'DM Serif Display',serif;font-size:18px;color:#94A3B8}
+.footer-logo span{color:#2DD4BF}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-size:13.5px;color:#64748B;text-decoration:none}
+.footer-links a:hover{color:var(--teal)}
+.footer-copy{font-size:12px;color:#475569;width:100%;margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid rgba(45,212,191,0.05)}
+
+@media(max-width:768px){
+  .scope-grid,.gets-grid{grid-template-columns:1fr}
+  nav{padding:1rem 1.25rem}
+  .hero,.section{padding:3.5rem 1.25rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://gabadown.com" class="logo">Gaba<span>Down</span></a>
+  <div style="display:flex;align-items:center;gap:1.5rem">
+    <a href="https://gabadown.com" class="nav-back"><i class="ti ti-arrow-left"></i> Patient site</a>
+    <a href="mailto:hello@gabadown.com" class="nav-cta">Contact us</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow"><i class="ti ti-stethoscope"></i> For Healthcare Providers</div>
+    <h1>A patient support resource built on the evidence your patients need.</h1>
+    <p class="hero-sub">GabaDown is a patient advocacy resource — not a clinical service. Based on the patient's intake and published deprescribing guidelines, GabaDown produces a draft taper framework the patient brings to you for review and approval. You stay the clinical decision-maker. GabaDown does the structural work a 15-minute appointment doesn't have time for.</p>
+    <div class="scope-chips">
+      <span class="chip chip-yes"><i class="ti ti-check" style="font-size:12px"></i> Works alongside your care</span>
+      <span class="chip chip-yes"><i class="ti ti-check" style="font-size:12px"></i> Never prescribes or diagnoses</span>
+      <span class="chip chip-yes"><i class="ti ti-check" style="font-size:12px"></i> Requires your supervision</span>
+      <span class="chip chip-yes"><i class="ti ti-check" style="font-size:12px"></i> Available US &amp; Canada</span>
+      <span class="chip chip-no">Not a clinical provider</span>
+      <span class="chip chip-no">Not a substitute for your role</span>
+    </div>
+  </div>
+</section>
+
+<!-- SCOPE -->
+<section class="section">
+  <div class="section-inner">
+    <span class="section-label">Scope</span>
+    <h2>What GabaDown is — and isn't</h2>
+    <p class="section-sub">We are clear with every patient about the boundaries of this resource before they engage. Your clinical role is not replaced or diminished.</p>
+    <div class="scope-grid">
+      <div class="scope-card scope-is">
+        <h3><i class="ti ti-check"></i> GabaDown is</h3>
+        <ul class="scope-list">
+          <li><i class="ti ti-check"></i> A personalized patient education and planning resource</li>
+          <li><i class="ti ti-check"></i> A draft taper framework produced from the patient's intake and published deprescribing guidelines — formatted for your review and approval</li>
+          <li><i class="ti ti-check"></i> Between-appointment support via an AI assistant trained on the patient's specific plan</li>
+          <li><i class="ti ti-check"></i> A daily tracking tool that generates data the patient can bring to their appointments</li>
+          <li><i class="ti ti-check"></i> Supplement information grounded in published research, with explicit pharmacist-consult reminders</li>
+          <li><i class="ti ti-check"></i> A patient advocacy and motivation resource for the long duration of a supervised taper</li>
+          <li><i class="ti ti-check"></i> A healthcare team summary — a one-page document formatted for your review, showing the draft taper framework and what the patient is tracking</li>
+        </ul>
+      </div>
+      <div class="scope-card scope-not">
+        <h3><i class="ti ti-x"></i> GabaDown is not</h3>
+        <ul class="scope-list">
+          <li><i class="ti ti-x"></i> A clinical or medical service</li>
+          <li><i class="ti ti-x"></i> A prescriber — of any kind, including supplements</li>
+          <li><i class="ti ti-x"></i> A replacement for your supervision or pharmacist involvement</li>
+          <li><i class="ti ti-x"></i> An emergency service — all emergencies are directed to the patient's doctor and emergency services</li>
+          <li><i class="ti ti-x"></i> A substitute for your clinical judgment</li>
+          <li><i class="ti ti-x"></i> Designed for patients who do not have a doctor's support for their reduction plan</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVIDENCE BASE -->
+<section class="section">
+  <div class="section-inner">
+    <span class="section-label">Evidence base</span>
+    <h2>The research this resource is built on</h2>
+    <p class="section-sub">GabaDown draws on peer-reviewed evidence for its taper frameworks and supplement information. The key publications informing this resource:</p>
+    <table class="evidence-table">
+      <thead>
+        <tr><th>Publication</th><th>Relevance</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Horowitz MA &amp; Taylor DM. <em>The Maudsley Deprescribing Guidelines: Antidepressants, Benzodiazepines, Gabapentinoids and Z-drugs.</em> Wiley-Blackwell, 2024.</td>
+          <td>First major clinical guideline to address gabapentinoids specifically. Basis for hyperbolic tapering concepts referenced in patient journals — the position that receptor occupancy follows a hyperbolic curve, so reduction steps should get smaller as dose decreases.</td>
+        </tr>
+        <tr>
+          <td>Mersfelder TL &amp; Nichols WH. <em>Gabapentin: Abuse, Dependence, and Withdrawal.</em> Ann Pharmacother, 2016.</td>
+          <td>Established that withdrawal symptoms are more likely at daily doses over 1,800mg — foundational to GabaDown's focus on long-term high-dose users specifically.</td>
+        </tr>
+        <tr>
+          <td>JAGS case study, 2025. Patient-directed gabapentin taper in an older adult.</td>
+          <td>Documents improved mental clarity, mobility, and medication burden following a patient-initiated, supervised reduction — directly mirrors the GabaDown client profile.</td>
+        </tr>
+        <tr>
+          <td>McDonald EG et al. <em>Patient empowerment brochures to increase gabapentinoid deprescribing: the GABA-WHY trial.</em> CMAJ Open, 2022.</td>
+          <td>Showed patient education materials doubled gabapentinoid deprescribing rates (21.1% vs 9.9%). GabaDown is a deeper, personalized version of this kind of patient education intervention.</td>
+        </tr>
+        <tr>
+          <td>Strahan AE et al. <em>Trends in Dispensed Gabapentin Prescriptions in the United States, 2010 to 2024.</em> Ann Intern Med, 2025.</td>
+          <td>Documents the scale of long-term gabapentin use and rising prescribing rates — contextualising the patient population GabaDown serves.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- WHAT PATIENT RECEIVES -->
+<section class="section">
+  <div class="section-inner">
+    <span class="section-label">What your patient receives</span>
+    <h2>The complete GabaDown system</h2>
+    <p class="section-sub">Each journal is built from a detailed intake questionnaire and delivered within 7 days. Everything is tailored to the patient's starting dose, history, and the method you've recommended.</p>
+    <div class="gets-grid">
+      <div class="get-item">
+        <div class="get-icon"><i class="ti ti-map-2"></i></div>
+        <div><div class="get-title">Draft taper framework + healthcare team summary</div><div class="get-desc">A structured phase-by-phase reduction schedule built from the patient's intake and published guidelines (Maudsley 2024, Horowitz &amp; Taylor). Formatted as a one-page summary the patient brings to you for review. You approve, adjust, or adopt it — it then becomes the plan the journal is built around.</div></div>
+      </div>
+      <div class="get-item">
+        <div class="get-icon"><i class="ti ti-clipboard-list"></i></div>
+        <div><div class="get-title">Daily tracking log</div><div class="get-desc">Pain, sleep, mood, energy, blood pressure, supplements — builds a dataset the patient brings to every appointment with you.</div></div>
+      </div>
+      <div class="get-item">
+        <div class="get-icon"><i class="ti ti-leaf"></i></div>
+        <div><div class="get-title">Supplement information</div><div class="get-desc">Evidence-referenced overview of commonly used supplements during gabapentin reduction. Patients are instructed to confirm everything with their pharmacist before use.</div></div>
+      </div>
+      <div class="get-item">
+        <div class="get-icon"><i class="ti ti-robot"></i></div>
+        <div><div class="get-title">AI Plan Assistant</div><div class="get-desc">Answers questions about the patient's specific journal — not a general health chatbot. Cannot diagnose, prescribe, or handle emergencies. Directs all emergencies to the patient's doctor.</div></div>
+      </div>
+      <div class="get-item">
+        <div class="get-icon"><i class="ti ti-book"></i></div>
+        <div><div class="get-title">Patient advocacy guide</div><div class="get-desc">How to communicate effectively with their care team — including how to raise concerns, what to track, and how to ask for hold periods when needed.</div></div>
+      </div>
+      <div class="get-item">
+        <div class="get-icon"><i class="ti ti-trophy"></i></div>
+        <div><div class="get-title">Milestone structure</div><div class="get-desc">A reward and motivation system for each reduction milestone — important for a process that can last 12–18 months with no external reinforcement.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW REFERRAL WORKS -->
+<section class="section">
+  <div class="section-inner">
+    <span class="section-label">Referral process</span>
+    <h2>How a referral works</h2>
+    <p class="section-sub">Three steps. No forms on your end. No clinical liability — GabaDown is a patient-initiated resource that works alongside your care.</p>
+    <ul class="steps-list">
+      <li class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">You mention GabaDown to your patient</div>
+          <div class="step-desc">Share gabadown.com or this page. The patient reviews the resource and decides whether it's right for them. No forms to fill out on your end, no clinical liability to manage — GabaDown is a patient-initiated resource.</div>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Patient completes their intake and receives their draft framework</div>
+          <div class="step-desc">The patient completes a detailed intake questionnaire about their current dose, their history, their goals, and your general direction on reduction. GabaDown produces a draft taper framework based on published deprescribing guidelines — along with a one-page healthcare team summary formatted for your review. The patient brings this to their next appointment with you.</div>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Patient arrives at appointments with better data</div>
+          <div class="step-desc">The patient arrives with a one-page healthcare team summary showing their draft framework, their tracking data, and their progress. You review the draft, adjust if needed, and approve it at the first appointment — then see real tracking data at every appointment thereafter. You stay the clinical decision-maker; GabaDown provides the structure between appointments.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- CONTACT + REFERRAL -->
+<section class="section" style="background:var(--navy2)">
+  <div class="section-inner">
+    <span class="section-label" style="color:var(--teal-light)">Get in touch</span>
+    <h2 style="color:#F0F9FF">Questions, referrals, or collaboration</h2>
+    <p class="section-sub" style="color:#64748B">If you have questions about GabaDown's clinical framing, want to discuss a specific patient situation, or are interested in a deeper conversation about the resource — reach out directly.</p>
+    <div class="referral-box">
+      <h3>Contact GabaDown</h3>
+      <p>Email is the best way to reach us. We respond to all provider enquiries within 24 hours. If you want to share GabaDown with a patient directly, gabadown.com is the patient-facing entry point.</p>
+      <a href="mailto:hello@gabadown.com" class="ref-cta"><i class="ti ti-mail"></i> hello@gabadown.com</a>
+      <div class="ref-note">
+        GabaDown is available to patients across the United States and Canada. Pricing is in USD. No clinical records or referral forms are required — patients engage directly and self-identify as having a prescribing physician's support for their reduction plan.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISCLAIMER -->
+<section class="disclaimer-pro">
+  <div class="disclaimer-pro-inner">
+    <p><strong style="color:#CBD5E1">Clinical disclaimer:</strong> GabaDown is a patient advocacy and personal support resource. It is not a medical service, does not employ clinicians, and nothing on this website or in any GabaDown journal constitutes medical advice, diagnosis, or treatment. GabaDown requires that all clients have a doctor who is aware of and supportive of their reduction plan before beginning. All taper decisions remain the responsibility of the prescribing physician and pharmacist. GabaDown does not advocate for any specific tapering method and follows whatever approach the prescribing physician recommends.</p>
+    <p style="margin-top:0.5rem">For clinical emergencies, patients are directed to their doctor and local emergency services. GabaDown is not an emergency service.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Gaba<span>Down</span></div>
+    <div class="footer-links">
+      <a href="mailto:hello@gabadown.com">hello@gabadown.com</a>
+      <a href="https://gabadown.com">Patient site</a>
+      <a href="https://gabadown.com/#disclaimer">Medical Disclaimer</a>
+    </div>
+    <div class="footer-copy">GabaDown is a patient advocacy resource. Not a medical service. © 2026 GabaDown. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
