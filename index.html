@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Taper Journal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -17,7 +19,7 @@
   --red:#DC2626;--red-light:#FEE2E2;
   --radius:14px;--radius-sm:10px;
 }
-body{font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--text);font-size:17px;line-height:1.6;padding:0;min-height:100vh}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:17px;line-height:1.6;padding:0;min-height:100vh}
 .wrap{max-width:920px;margin:0 auto;padding:1.5rem 1.25rem 4rem}
 
 /* HERO */
@@ -327,10 +329,57 @@ input:focus{outline:none;border-color:var(--purple);background:#fff}
 .unlock-close{background:#534AB7;color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit}
 .unlock-close:hover{background:#6B5FC7}
 .confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999}
+
+/* Editorial serif headings -- her colors, nicer type */
+.hero-title,.card-title,.mc-title,.hd-title,.cal-hero-title,
+.taper-header-left .th-dose,.taper-header-right .th-goal-dose,
+.phase-dose,.story-quote,.unlock-title,.affirmation p,
+.topbar-logo{font-family:'DM Serif Display',serif;letter-spacing:-0.5px;font-weight:400}
+.hero-eyebrow,.card-eyebrow,.th-label,.taper-header-right .th-goal,
+.phase-num,.rule-title,.timing-title,.story-source,
+.topbar-badge{font-family:'IBM Plex Mono',monospace;letter-spacing:0.08em}
+
+/* TOPBAR */
+.topbar{background:#1a0a2e;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(159,122,234,0.2);position:sticky;top:0;z-index:50}
+.topbar-logo{font-size:20px;color:#F0E6FF;text-decoration:none}
+.topbar-logo span{color:#9F7AEA}
+.topbar-badge{font-size:11px;color:#9F7AEA;background:rgba(159,122,234,0.1);border:1px solid rgba(159,122,234,0.25);padding:5px 14px;border-radius:20px;text-transform:uppercase}
+
+/* PASSWORD GATE */
+#gate{position:fixed;inset:0;background:#1a0a2e;display:flex;align-items:center;justify-content:center;z-index:9999;padding:1.5rem}
+#gate-box{max-width:380px;width:100%;text-align:center}
+#gate-emoji{font-size:44px;margin-bottom:1rem}
+#gate-title{font-family:'DM Serif Display',serif;font-size:26px;color:#F0E6FF;margin-bottom:0.5rem}
+#gate-sub{font-size:14px;color:#7C6A9A;margin-bottom:1.75rem;line-height:1.6}
+#gate-input{width:100%;border:1px solid rgba(159,122,234,0.35);border-radius:10px;padding:14px 16px;font-size:17px;font-family:'DM Sans',sans-serif;background:rgba(255,255,255,0.05);color:#F0E6FF;height:52px;text-align:center;margin-bottom:12px}
+#gate-input::placeholder{color:#5A4A7A}
+#gate-input:focus{outline:none;border-color:#9F7AEA}
+#gate-btn{width:100%;padding:15px;font-size:16px;font-weight:700;border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;background:#6B46C1;color:#F0E6FF;border:none}
+#gate-btn:hover{background:#7C3AED}
+#gate-error{font-size:13px;color:#FBB6CE;margin-top:12px;min-height:18px}
+.content-hidden{display:none}
 </style>
 </head>
 <body>
-<div class="wrap">
+
+<!-- PASSWORD GATE -->
+<div id="gate">
+  <div id="gate-box">
+    <div id="gate-emoji">🌿</div>
+    <div id="gate-title">Just for us</div>
+    <div id="gate-sub">This is a private journal. Enter the password to continue.</div>
+    <input type="password" id="gate-input" placeholder="Password" autocomplete="off">
+    <button id="gate-btn" onclick="checkGate()">Unlock</button>
+    <div id="gate-error"></div>
+  </div>
+</div>
+
+<div class="topbar content-hidden" id="topbar">
+  <a href="#" class="topbar-logo">My Taper <span>Journal</span></a>
+  <button onclick="go('history', document.querySelector('[data-page=history]'))" style="background:none;border:1px solid rgba(159,122,234,0.3);color:#D6BCFA;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer">Download my records</button>
+</div>
+
+<div class="wrap content-hidden" id="main-content">
 
 <!-- HERO -->
 <div class="hero">
@@ -898,7 +947,22 @@ input:focus{outline:none;border-color:var(--purple);background:#fff}
   <div id="hlist"></div>
   <div style="margin-top:1rem;padding:1.25rem;background:var(--purple-light);border-radius:var(--radius);border:1px solid rgba(107,70,193,0.2)">
     <p style="font-size:15px;color:#4C1D95;font-weight:700;margin-bottom:6px">Bring your journal to an appointment</p>
-    <p style="font-size:14px;color:#6D28D9;line-height:1.5">Show the History tab to your doctor on your iPad, or take screenshots. All data stays private — saved only on this device.</p>
+    <p style="font-size:14px;color:#6D28D9;line-height:1.5">Show the History tab to your doctor on your device, or download a printable copy below. All data stays private — saved only on this device unless you download or back it up.</p>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <div class="card-eyebrow">Save your records</div>
+    <div class="accent-purple">
+      <div class="card-title">Download &amp; back up</div>
+      <div class="card-sub">Your entries live only in this browser. Download regularly so nothing is ever lost — especially before clearing your browser data or switching devices.</div>
+    </div>
+    <button class="btn btn-purple" onclick="exportPrintable()">Download printable record (for doctor visits)</button>
+    <button class="btn btn-outline" onclick="exportBackup()" style="margin-top:10px">Download full backup (.json)</button>
+    <div style="margin-top:16px">
+      <div class="field-label">Restore from a backup file</div>
+      <input type="file" id="restore-file" accept="application/json" onchange="importBackup(this)" style="width:100%;border:1px solid var(--border2);border-radius:var(--radius-sm);padding:12px;font-size:14px;background:var(--surface2)">
+    </div>
+    <div class="saved-msg" id="export-msg"></div>
   </div>
 </div>
 
@@ -951,6 +1015,131 @@ input:focus{outline:none;border-color:var(--purple);background:#fff}
 
 </div>
 <script>
+/* ============ PRIVATE ACCESS GATE ============ */
+/* Natalie: change the word below to set the journal password, then tell your mom */
+var GATE_PASSWORD = "sunflower82";
+
+function checkGate(){
+  var val = document.getElementById('gate-input').value;
+  if(val === GATE_PASSWORD){
+    unlockJournal();
+  } else {
+    document.getElementById('gate-error').textContent = "That's not it — try again.";
+    document.getElementById('gate-input').value = '';
+    document.getElementById('gate-input').focus();
+  }
+}
+
+function unlockJournal(){
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('topbar').classList.remove('content-hidden');
+  document.getElementById('main-content').classList.remove('content-hidden');
+  try{ localStorage.setItem('tj_unlocked','1'); }catch(e){}
+}
+
+(function(){
+  var unlocked = false;
+  try{ unlocked = localStorage.getItem('tj_unlocked') === '1'; }catch(e){}
+  if(unlocked){ unlockJournal(); }
+  document.addEventListener('DOMContentLoaded', function(){
+    var gi = document.getElementById('gate-input');
+    if(gi){
+      gi.addEventListener('keydown', function(e){ if(e.key === 'Enter') checkGate(); });
+      if(!unlocked) gi.focus();
+    }
+  });
+})();
+
+/* ============ EXPORT / BACKUP / RESTORE ============ */
+function downloadFile(filename, content, mime){
+  var blob = new Blob([content], {type: mime || 'text/plain'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+}
+
+function exportBackup(){
+  var data = {
+    exported: new Date().toISOString(),
+    tj_soul: JSON.parse(Store.get('tj_soul') || '{}'),
+    tj_taper: JSON.parse(Store.get('tj_taper') || '{}'),
+    tj_cal: JSON.parse(Store.get('tj_cal') || '{}'),
+    tj_claimed: JSON.parse(Store.get('tj_claimed') || '{}'),
+    tj_entries: getE()
+  };
+  var name = 'my-taper-journal-backup-' + new Date().toISOString().split('T')[0] + '.json';
+  downloadFile(name, JSON.stringify(data, null, 2), 'application/json');
+  var msg = document.getElementById('export-msg');
+  if(msg){ msg.textContent = 'Backup downloaded. Keep this file safe — it can restore everything.'; setTimeout(function(){msg.textContent='';}, 5000); }
+}
+
+function exportPrintable(){
+  var soul = JSON.parse(Store.get('tj_soul') || '{}');
+  var taper = JSON.parse(Store.get('tj_taper') || '{}');
+  var cal = JSON.parse(Store.get('tj_cal') || '{}');
+  var entries = getE();
+  var lines = [];
+  lines.push('MY TAPER JOURNAL — printable record');
+  lines.push('Downloaded ' + new Date().toLocaleDateString());
+  lines.push('='.repeat(50));
+  lines.push('');
+  lines.push('CURRENT STATUS');
+  lines.push('Current dose: ' + (cal.current || taper.current_dose || 'not set') + ' mg/day');
+  lines.push('Started at: ' + (cal.start || 'not set'));
+  lines.push('Last reduction: ' + (taper.last_drop || 'not set'));
+  lines.push('Next planned drop: ' + (taper.next_drop || 'not set'));
+  lines.push('');
+  lines.push('MY WHY');
+  lines.push('Motivation: ' + (soul.motivation || ''));
+  lines.push('What I\'m learning: ' + (soul.learning || ''));
+  lines.push('Vision: ' + (soul.vision || ''));
+  lines.push('');
+  lines.push('='.repeat(50));
+  lines.push('DAILY LOG HISTORY (' + entries.length + ' entries)');
+  lines.push('='.repeat(50));
+  entries.forEach(function(e){
+    lines.push('');
+    lines.push(fmtDate(e.date));
+    lines.push('  Gabapentin: ' + (e.gaba || '—') + 'mg across ' + (e.gnum || '—') + ' doses' + (e.gnote ? ' — ' + e.gnote : ''));
+    lines.push('  Pain: ' + (e.pain != null ? e.pain + '/10' : '—') + (e.ploc ? ' (' + e.ploc + ')' : ''));
+    lines.push('  Sleep: ' + (e.sleep != null ? e.sleep + '/5' : '—') + (e.shrs ? ', ' + e.shrs + 'h' : '') + (e.swakes ? ', woke ' + e.swakes + 'x' : ''));
+    lines.push('  Mood: ' + (e.mood != null ? e.mood + '/5' : '—') + '  Energy: ' + (e.energy != null ? e.energy + '/5' : '—'));
+    if(e.supps && e.supps.length) lines.push('  Supplements: ' + e.supps.join(', '));
+    if(e.bps && e.bpd) lines.push('  Blood pressure: ' + e.bps + '/' + e.bpd + (e.bpt ? ' at ' + e.bpt : ''));
+    if(e.note) lines.push('  Note: ' + e.note);
+  });
+  var name = 'my-taper-journal-' + new Date().toISOString().split('T')[0] + '.txt';
+  downloadFile(name, lines.join('\n'), 'text/plain');
+  var msg = document.getElementById('export-msg');
+  if(msg){ msg.textContent = 'Printable record downloaded — good for doctor visits or safekeeping.'; setTimeout(function(){msg.textContent='';}, 5000); }
+}
+
+function importBackup(input){
+  var file = input.files && input.files[0];
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      var data = JSON.parse(e.target.result);
+      if(data.tj_soul) Store.set('tj_soul', JSON.stringify(data.tj_soul));
+      if(data.tj_taper) Store.set('tj_taper', JSON.stringify(data.tj_taper));
+      if(data.tj_cal) Store.set('tj_cal', JSON.stringify(data.tj_cal));
+      if(data.tj_claimed) Store.set('tj_claimed', JSON.stringify(data.tj_claimed));
+      if(data.tj_entries) Store.set('tj_entries', JSON.stringify(data.tj_entries));
+      var msg = document.getElementById('export-msg');
+      if(msg){ msg.style.color='var(--green)'; msg.textContent = 'Restored! Reloading your journal...'; }
+      setTimeout(function(){ location.reload(); }, 1200);
+    }catch(err){
+      var msg = document.getElementById('export-msg');
+      if(msg){ msg.style.color='var(--red)'; msg.textContent = 'Could not read that backup file.'; }
+    }
+  };
+  reader.readAsText(file);
+}
+
 var sc={pain:null,sleep:null,mood:null,energy:null};
 var pills=[];
 var st=null;var tt=null;
