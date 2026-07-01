@@ -3,926 +3,1384 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GabaDown — A Custom Reduction Protocol for Long-Term Gabapentin Users</title>
-<meta name="description" content="GabaDown builds your personalised gabapentin reduction framework and healthcare team summary — so you can walk into your next appointment with a plan, not a question.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<title>My Taper Journal</title>
 <style>
-/* ── TOKENS ─────────────────────────────────────────────────────── */
-:root {
-  --navy:   #0B1628;
-  --navy2:  #112240;
-  --navy3:  #1A3A5C;
-  --teal:   #0D9488;
-  --teal2:  #2DD4BF;
-  --teal3:  #CCFBF1;
-  --gold:   #F59E0B;
-  --gold2:  #FEF3C7;
-  --cream:  #F8FAFC;
-  --white:  #FFFFFF;
-  --text:   #0F172A;
-  --text2:  #374151;
-  --text3:  #6B7280;
-  --on-dark:#CBD5E1;
-  --border: #E2E8F0;
-  --border-dark: rgba(45,212,191,0.2);
-  --red:    #EF4444;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F5FF;--surface:#FFFFFF;--surface2:#F0EBF8;
+  --border:rgba(100,80,160,0.18);--border2:rgba(100,80,160,0.32);
+  --text:#1A0A2E;--text2:#5A4A7A;--text3:#9A8AB0;
+  --purple:#6B46C1;--purple-light:#EDE9FE;--purple-mid:#9F7AEA;
+  --teal:#0D9488;--teal-light:#CCFBF1;
+  --green:#16A34A;--green-light:#DCFCE7;
+  --amber:#D97706;--amber-light:#FEF3C7;
+  --red:#DC2626;--red-light:#FEE2E2;
+  --radius:14px;--radius-sm:10px;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden;font-size:16px;line-height:1.65}
-h1,h2,h3{font-family:'DM Serif Display',serif;letter-spacing:-0.5px}
-.mono{font-family:'IBM Plex Mono',monospace}
+body{font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--text);font-size:17px;line-height:1.6;padding:0;min-height:100vh}
+.wrap{max-width:920px;margin:0 auto;padding:1.5rem 1.25rem 4rem}
 
-/* ── NAV ──────────────────────────────────────────────────────────── */
-nav{padding:1.25rem 2.5rem;display:flex;justify-content:space-between;align-items:center;background:var(--navy);position:sticky;top:0;z-index:100;border-bottom:1px solid var(--border-dark)}
-.logo{font-family:'DM Serif Display',serif;font-size:22px;color:#F0F9FF;letter-spacing:-0.5px;text-decoration:none}
-.logo span{color:var(--teal2)}
-.nav-links{display:flex;align-items:center;gap:1.5rem}
-.nav-link{color:var(--on-dark);font-size:14px;font-weight:500;text-decoration:none;transition:color .2s}
-.nav-link:hover{color:var(--teal2)}
-.nav-cta{background:var(--teal);color:white;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:all .2s;white-space:nowrap}
-.nav-cta:hover{background:var(--teal2);color:var(--navy)}
+/* HERO */
+.hero{background:#1a0a2e;border-radius:20px;padding:2rem 2rem 1.75rem;margin-bottom:1.75rem}
+.hero-eyebrow{font-size:13px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#9F7AEA;margin-bottom:0.35rem}
+.hero-title{font-size:34px;font-weight:700;color:#F0E6FF;line-height:1.15;margin-bottom:0.25rem}
+.hero-sub{font-size:16px;color:#7C6A9A;margin-bottom:1.75rem}
+.vgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.vgrid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.25rem}
+.vc{border-radius:14px;padding:18px 16px;display:flex;flex-direction:column;gap:8px}
+.vc-row{flex-direction:row;align-items:center;gap:12px}
+.vc .icon{font-size:30px}
+.vc .vlabel{font-size:16px;font-weight:700;line-height:1.3}
+.vc .vdetail{font-size:14px;line-height:1.5;opacity:0.85}
+.vc-purple{background:#2D1B69;color:#D6BCFA}
+.vc-teal{background:#0D3D3A;color:#81E6D9}
+.vc-green{background:#0F3320;color:#9AE6B4}
+.vc-red{background:#3D0F1A;color:#FEB2C3}
+.vc-indigo{background:#1E1145;border:0.5px solid #534AB7;color:#C4B5FD}
+.vc-cyan{background:#0A2A2A;color:#76E4F7}
+.vc-lime{background:#1A2E0F;color:#C6F6D5}
+.vc-rose{background:#3D1020;color:#FBB6CE}
+.affirmation{background:#0F2A1A;border:0.5px solid #276749;border-radius:14px;padding:18px 22px;text-align:center}
+.affirmation p{font-size:17px;font-style:italic;color:#9AE6B4;line-height:1.65}
+.affirmation span{font-size:13px;color:#276749;display:block;margin-top:6px}
 
-/* ── HERO ─────────────────────────────────────────────────────────── */
-.hero{background:var(--navy);min-height:90vh;display:flex;align-items:center;justify-content:center;padding:6rem 2.5rem;position:relative;overflow:hidden;text-align:center}
-.hero-graphic{position:absolute;right:-80px;top:50%;transform:translateY(-50%);width:62%;opacity:0.25;pointer-events:none}
-.hero-content{position:relative;z-index:2;max-width:820px;margin:0 auto}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal2);background:rgba(45,212,191,0.08);border:1px solid var(--border-dark);padding:7px 18px;border-radius:20px;margin-bottom:2rem}
-.hero h1{font-size:clamp(36px,5vw,62px);color:#F8FAFC;line-height:1.08;margin-bottom:1.5rem}
-.hero h1 em{font-style:italic;color:var(--teal2)}
-.hero-sub{font-size:18px;color:var(--on-dark);line-height:1.8;margin-bottom:2.5rem;font-weight:300}
-.hero-cta-group{display:flex;flex-direction:column;gap:1rem;align-items:center}
-.hero-cta{display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:white;padding:17px 40px;border-radius:12px;font-size:17px;font-weight:700;text-decoration:none;transition:all .2s}
-.hero-cta:hover{background:var(--teal2);color:var(--navy);transform:translateY(-2px)}
-.hero-trust{display:flex;flex-wrap:wrap;gap:20px;justify-content:center}
-.hero-trust-item{display:flex;align-items:center;gap:7px;font-size:14px;color:#64748B;font-weight:500}
-.hero-trust-item i{color:var(--teal2);font-size:16px}
-.hero-what{font-size:16px;color:var(--teal2);max-width:680px;margin:0 auto 1.5rem;line-height:1.8;font-weight:500;opacity:0.9}
+/* TABS */
+.tabs{display:flex;border-radius:14px;overflow:hidden;border:1px solid var(--border2);margin-bottom:1.5rem;flex-wrap:wrap}
+.tab{flex:1;min-width:80px;padding:13px 6px;font-size:15px;font-weight:500;text-align:center;cursor:pointer;background:var(--surface2);color:var(--text2);border:none;border-right:1px solid var(--border);border-bottom:1px solid var(--border);transition:all 0.15s;font-family:inherit}
+.tab:last-child{border-right:none}
+.tab.on{background:var(--surface);color:var(--text);font-weight:700}
+.page{display:none}
+.page.on{display:block}
 
-/* ── PROCESS RAIL ─────────────────────────────────────────────────── */
-.process{background:var(--white);padding:5rem 2.5rem;border-bottom:1px solid var(--border)}
-.process-inner{max-width:1100px;margin:0 auto}
-.process-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem;flex-wrap:wrap;gap:1rem}
-.process-header h2{font-size:clamp(26px,3.5vw,36px);max-width:480px}
-.process-header p{font-size:15px;color:var(--text3);max-width:320px;line-height:1.7}
-.process-rail{display:grid;grid-template-columns:repeat(6,1fr);position:relative}
-.process-rail::before{content:'';position:absolute;top:27px;left:calc(100%/12);right:calc(100%/12);height:2px;background:linear-gradient(90deg,var(--teal) 0%,rgba(13,148,136,0.15) 100%);z-index:0}
-.process-step{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 0.75rem;position:relative;z-index:1}
-.process-num{width:56px;height:56px;border-radius:50%;background:var(--navy);color:var(--teal2);font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:500;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;border:2px solid var(--teal);flex-shrink:0}
-.process-step-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.3}
-.process-step-desc{font-size:12px;color:var(--text3);line-height:1.55}
-.process-step.highlight .process-num{background:var(--teal);color:white;border-color:var(--teal)}
-.process-step.highlight .process-step-title{color:var(--teal)}
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.6rem;margin-bottom:1.1rem}
+.card-eyebrow{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:0.75rem}
+.card-title{font-size:22px;font-weight:700;color:var(--text);margin-bottom:0.3rem}
+.card-sub{font-size:15px;color:var(--text2);margin-bottom:1.1rem;line-height:1.6}
+.accent-purple{border-left:4px solid var(--purple);padding-left:16px;margin-bottom:1rem}
+.accent-teal{border-left:4px solid var(--teal);padding-left:16px;margin-bottom:1rem}
+.accent-amber{border-left:4px solid var(--amber);padding-left:16px;margin-bottom:1rem}
+.accent-green{border-left:4px solid var(--green);padding-left:16px;margin-bottom:1rem}
+.accent-red{border-left:4px solid var(--red);padding-left:16px;margin-bottom:1rem}
+.accent-rose{border-left:4px solid #E11D48;padding-left:16px;margin-bottom:1rem}
 
-/* ── STATS ────────────────────────────────────────────────────────── */
-.stats{background:var(--navy2);padding:4rem 2.5rem;border-top:1px solid var(--border-dark);border-bottom:1px solid var(--border-dark)}
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;max-width:900px;margin:0 auto}
-.stat{text-align:center;padding:1rem}
-.stat-num{font-family:'DM Serif Display',serif;font-size:64px;color:var(--teal2);display:block;line-height:1;margin-bottom:0.5rem}
-.stat-label{font-size:14px;color:var(--on-dark);line-height:1.6}
+.prompts{margin-bottom:16px}
+.prompts p{font-size:15px;color:var(--text3);padding:5px 0 5px 18px;position:relative;line-height:1.5}
+.prompts p::before{content:'—';position:absolute;left:0}
 
-/* ── SECTION COMMON ───────────────────────────────────────────────── */
-.wrap{max-width:1100px;margin:0 auto}
-.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:0.75rem;display:flex;align-items:center;gap:8px}
-.eyebrow-light{color:var(--teal2)}
-.section-title{font-size:clamp(26px,4vw,40px);line-height:1.15;margin-bottom:0.85rem}
-.section-sub{font-size:16px;color:var(--text2);line-height:1.85;max-width:640px;margin-bottom:2.5rem}
+textarea{width:100%;border:1px solid var(--border2);border-radius:var(--radius-sm);padding:14px 16px;font-size:17px;font-family:inherit;color:var(--text);background:var(--surface2);resize:vertical;line-height:1.7;min-height:130px}
+textarea:focus{outline:none;border-color:var(--purple);background:#fff}
+textarea::placeholder{color:var(--text3)}
+input[type="text"],input[type="date"],input[type="number"]{width:100%;border:1px solid var(--border2);border-radius:var(--radius-sm);padding:12px 15px;font-size:17px;font-family:inherit;color:var(--text);background:var(--surface2);height:50px}
+input:focus{outline:none;border-color:var(--purple);background:#fff}
 
-/* ── BENTO FEATURES ───────────────────────────────────────────────── */
-.features{background:var(--cream);padding:5.5rem 2.5rem}
-.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:2rem}
-.bento-card{background:var(--white);border-radius:16px;padding:1.75rem;border:1px solid var(--border);transition:all .2s}
-.bento-card:hover{border-color:var(--teal);transform:translateY(-2px)}
-.bento-3{grid-column:span 3}
-.bento-2{grid-column:span 2}
-.bento-6{grid-column:span 6}
-.bento-dark{background:var(--navy);border-color:var(--border-dark)}
-.bento-dark:hover{border-color:var(--teal2)}
-.bento-teal{background:rgba(13,148,136,0.06);border-color:rgba(13,148,136,0.3)}
-.card-icon{width:48px;height:48px;background:rgba(13,148,136,0.08);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
-.card-icon i{font-size:22px;color:var(--teal)}
-.bento-dark .card-icon{background:rgba(45,212,191,0.1)}
-.bento-dark .card-icon i{color:var(--teal2)}
-.card-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px}
-.bento-dark .card-title{color:#F0F9FF}
-.card-desc{font-size:14px;color:var(--text2);line-height:1.7}
-.bento-dark .card-desc{color:var(--on-dark)}
-.card-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:10px}
-.badge-teal{background:var(--teal3);color:#0F766E}
-.badge-gold{background:var(--gold2);color:#92400E}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.field-label{font-size:15px;color:var(--text2);margin-bottom:8px;font-weight:600}
 
-/* ── SUPPLEMENT INFO ──────────────────────────────────────────────── */
-.supps{background:var(--white);padding:5.5rem 2.5rem}
-.supps-split{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;margin-top:2rem}
-.supps-copy p{font-size:16px;color:var(--text2);line-height:1.85;margin-bottom:1rem}
-.supp-cats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.supp-cat{background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.25rem}
-.supp-cat-icon{font-size:22px;margin-bottom:8px}
-.supp-cat-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
-.supp-cat-desc{font-size:13px;color:var(--text3);line-height:1.6}
-.supp-disclaimer{background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.3);border-radius:10px;padding:1rem 1.25rem;margin-top:1.25rem;font-size:13px;color:var(--text2);line-height:1.7;display:flex;gap:10px;align-items:flex-start}
-.supp-disclaimer i{color:var(--gold);font-size:16px;margin-top:2px;flex-shrink:0}
+/* SCALES */
+.scale-row{display:flex;gap:9px;flex-wrap:wrap}
+.sb{border:1px solid var(--border2);border-radius:var(--radius-sm);background:var(--surface2);color:var(--text2);font-size:18px;padding:11px 15px;cursor:pointer;min-width:52px;text-align:center;transition:all 0.1s;font-family:inherit}
+.sb:hover{background:#EDE9FE}
+.sb.sp{background:#FEE2E2;border-color:#DC2626;color:#991B1B;font-weight:700}
+.sb.ss{background:#DBEAFE;border-color:#2563EB;color:#1E40AF;font-weight:700}
+.sb.sm{background:#DCFCE7;border-color:#16A34A;color:#14532D;font-weight:700}
+.sb.se{background:#FEF3C7;border-color:#D97706;color:#92400E;font-weight:700}
 
-/* ── STORIES ──────────────────────────────────────────────────────── */
-.stories{background:var(--navy);padding:5.5rem 2.5rem}
-.stories-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:2.5rem}
-.story-card{background:var(--navy2);border-radius:16px;padding:1.75rem;border:1px solid var(--border-dark);display:flex;flex-direction:column;gap:12px}
-.story-source{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#475569;display:flex;align-items:center;gap:6px}
-.story-source i{color:var(--teal2);font-size:14px}
-.story-tags{display:flex;gap:6px;flex-wrap:wrap}
-.story-tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
-.tag-blue{background:rgba(37,99,235,0.2);color:#93C5FD}
-.tag-green{background:rgba(22,163,74,0.2);color:#86EFAC}
-.tag-teal{background:rgba(13,148,136,0.2);color:var(--teal2)}
-.story-quote{font-size:15px;font-style:italic;color:#CBD5E1;line-height:1.75;padding-left:14px;border-left:2px solid var(--teal)}
-.story-detail{font-size:13px;color:#94A3B8;line-height:1.65}
-.story-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--teal2);text-decoration:none;margin-top:auto;transition:all .2s}
-.story-link:hover{color:white;gap:10px}
-.stories-note{background:rgba(45,212,191,0.04);border:1px solid var(--border-dark);border-radius:12px;padding:1.25rem 1.5rem;margin-top:1.5rem}
-.stories-note p{font-size:14px;color:#94A3B8;line-height:1.65}
+/* PILLS */
+.pill-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.pill{border:1px solid var(--border2);border-radius:20px;background:var(--surface2);color:var(--text2);font-size:15px;padding:9px 18px;cursor:pointer;transition:all 0.1s;font-family:inherit}
+.pill:hover{background:#EDE9FE}
+.pill.on{background:#EDE9FE;border-color:var(--purple);color:#4C1D95;font-weight:700}
 
-/* ── WHO ──────────────────────────────────────────────────────────── */
-.who{background:var(--cream);padding:5.5rem 2.5rem}
-.who-split{display:grid;grid-template-columns:3fr 2fr;gap:3.5rem;align-items:start;margin-top:2.5rem}
-.who-intro{font-size:16px;color:var(--text2);margin-bottom:1.5rem;line-height:1.85}
-.criteria-list{list-style:none}
-.criteria-list li{font-size:15px;color:var(--text);padding:12px 0 12px 32px;position:relative;border-bottom:1px solid var(--border);line-height:1.5;display:flex;align-items:flex-start}
-.criteria-list li:last-child{border-bottom:none}
-.criteria-list li i{position:absolute;left:0;top:14px;color:var(--teal);font-size:17px}
-.not-for{background:#112240;border-radius:16px;padding:1.75rem;border:1px solid var(--border-dark)}
-.not-for-title{font-size:14px;font-weight:700;color:#F0F9FF;margin-bottom:1rem;display:flex;align-items:center;gap:8px;letter-spacing:0.02em}
-.not-for-title i{color:var(--on-dark)}
-.not-for-list{list-style:none}
-.not-for-list li{font-size:14px;color:var(--on-dark);padding:8px 0 8px 24px;position:relative;border-bottom:1px solid rgba(45,212,191,0.07);line-height:1.5}
-.not-for-list li:last-child{border-bottom:none}
-.not-for-list li::before{content:'×';position:absolute;left:0;color:#94A3B8;font-weight:700;font-size:16px}
+/* BUTTONS */
+.btn{width:100%;padding:17px;font-size:18px;font-weight:700;border-radius:var(--radius);cursor:pointer;font-family:inherit;transition:all 0.1s;margin-top:0.5rem;display:block;text-align:center;text-decoration:none}
+.btn-purple{background:#2D1B69;color:#D6BCFA;border:1px solid #534AB7}
+.btn-purple:hover{background:#3D2580}
+.btn-outline{background:var(--surface2);color:var(--text);border:1px solid var(--border2)}
+.btn-outline:hover{background:#EDE9FE}
+.btn-teal{background:#0D3D3A;color:#81E6D9;border:1px solid #0D9488}
+.btn-teal:hover{background:#0F4A46}
+.btn:active{transform:scale(0.99)}
+.saved-msg{font-size:15px;color:var(--green);text-align:center;margin-top:12px;min-height:24px;font-weight:600}
 
-/* ── ADD-ONS ──────────────────────────────────────────────────────── */
-.addons{background:var(--white);padding:4rem 2.5rem}
-.addon-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:2rem}
-.addon-card{background:var(--cream);border:1px solid var(--border);border-radius:16px;padding:1.5rem;display:flex;flex-direction:column;gap:10px;transition:all .2s}
-.addon-card:hover{border-color:var(--teal);transform:translateY(-2px)}
-.addon-price{font-family:'DM Serif Display',serif;font-size:36px;color:var(--teal);line-height:1}
-.addon-name{font-weight:700;font-size:16px;color:var(--text)}
-.addon-desc{font-size:13.5px;color:var(--text2);line-height:1.7;flex:1}
-.addon-cta{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--navy);color:var(--teal2);padding:12px 20px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:all .2s;margin-top:auto}
-.addon-cta:hover{background:var(--teal);color:white}
+/* TAPER TIMELINE */
+.taper-header{background:#1a0a2e;border-radius:14px;padding:1.5rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.taper-header-left .th-label{font-size:12px;color:#9F7AEA;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px}
+.taper-header-left .th-dose{font-size:36px;font-weight:700;color:#F0E6FF}
+.taper-header-left .th-sub{font-size:14px;color:#7C6A9A;margin-top:4px}
+.taper-header-right{text-align:right}
+.taper-header-right .th-goal{font-size:14px;color:#9AE6B4;font-weight:600}
+.taper-header-right .th-goal-dose{font-size:26px;font-weight:700;color:#9AE6B4}
 
-/* ── KIT FORM ─────────────────────────────────────────────────────── */
-.kit-section{background:var(--navy2);padding:5rem 2.5rem;border-top:1px solid var(--border-dark);border-bottom:1px solid var(--border-dark)}
-.kit-inner{max-width:600px;margin:0 auto;text-align:center}
-.kit-inner h2{font-size:clamp(24px,3.5vw,36px);color:#F0F9FF;margin-bottom:0.75rem}
-.kit-inner p{color:#94A3B8;margin-bottom:1.75rem;font-size:16px;line-height:1.75}
-.kit-inner .seva-form{max-width:480px;margin:0 auto}
+.phase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1rem}
+.phase-card{border-radius:12px;padding:16px;border:1px solid var(--border)}
+.phase-card.active{border-color:#6B46C1;background:#EDE9FE}
+.phase-card.future{background:var(--surface2);opacity:0.75}
+.phase-card.done{background:#DCFCE7;border-color:#16A34A}
+.phase-num{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px}
+.phase-card.active .phase-num{color:#6B46C1}
+.phase-card.done .phase-num{color:#16A34A}
+.phase-card.future .phase-num{color:var(--text3)}
+.phase-dose{font-size:22px;font-weight:700;margin-bottom:4px}
+.phase-card.active .phase-dose{color:#1A0A2E}
+.phase-card.done .phase-dose{color:#14532D}
+.phase-card.future .phase-dose{color:var(--text2)}
+.phase-detail{font-size:13px;line-height:1.5}
+.phase-card.active .phase-detail{color:var(--text2)}
+.phase-card.done .phase-detail{color:#166534}
+.phase-card.future .phase-detail{color:var(--text3)}
 
-/* ── COMPARE ──────────────────────────────────────────────────────── */
-.compare{background:var(--white);padding:5rem 2.5rem}
-.compare-table{width:100%;border-collapse:collapse;margin-top:2rem;font-size:15px}
-.compare-table th{background:var(--navy);color:var(--teal2);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.07em;text-transform:uppercase;padding:1rem 1.25rem;text-align:left;font-weight:500}
-.compare-table th:first-child{border-radius:10px 0 0 0}
-.compare-table th:last-child{border-radius:0 10px 0 0}
-.compare-table td{padding:0.9rem 1.25rem;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top}
-.compare-table tr:last-child td{border-bottom:none}
-.compare-table td:first-child{font-weight:600;color:var(--text)}
-.compare-table .col-gaba{background:rgba(13,148,136,0.04)}
-.yes{color:#16A34A;font-weight:700}
-.no{color:var(--on-dark)}
-.rare{color:#D97706}
+.rule-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:0}
+.rule-box{border-radius:10px;padding:14px 16px}
+.rule-box.purple{background:#EDE9FE;border:1px solid #C4B5FD}
+.rule-box.teal{background:#CCFBF1;border:1px solid #5EEAD4}
+.rule-box.amber{background:#FEF3C7;border:1px solid #FDE68A}
+.rule-box.red{background:#FEE2E2;border:1px solid #FECACA}
+.rule-title{font-size:13px;font-weight:700;margin-bottom:7px;text-transform:uppercase;letter-spacing:0.06em}
+.rule-box.purple .rule-title{color:#4C1D95}
+.rule-box.teal .rule-title{color:#0F766E}
+.rule-box.amber .rule-title{color:#92400E}
+.rule-box.red .rule-title{color:#991B1B}
+.rule-item{font-size:14px;padding:3px 0 3px 14px;position:relative;line-height:1.4}
+.rule-item::before{content:'•';position:absolute;left:0;font-weight:700}
+.rule-box.purple .rule-item{color:#5B21B6}
+.rule-box.teal .rule-item{color:#134E4A}
+.rule-box.amber .rule-item{color:#78350F}
+.rule-box.red .rule-item{color:#7F1D1D}
 
-/* ── OFFER ────────────────────────────────────────────────────────── */
-.offer{background:var(--navy2);padding:5.5rem 2.5rem}
-.offer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:5fr 7fr;gap:3.5rem;align-items:start}
-.offer-box{background:var(--navy);border-radius:20px;padding:2.5rem;border:1px solid var(--border-dark)}
-.spots-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:#FCA5A5;font-size:12px;font-weight:600;padding:6px 16px;border-radius:20px;margin-bottom:1.5rem;font-family:'IBM Plex Mono',monospace;letter-spacing:0.05em}
-.offer-price{font-family:'DM Serif Display',serif;font-size:72px;color:#F8FAFC;line-height:1;display:block}
-.offer-currency{font-size:15px;color:#475569;margin-top:4px;margin-bottom:1.5rem}
-.offer-includes{list-style:none;margin-bottom:2rem}
-.offer-includes li{font-size:14px;color:#CBD5E1;padding:10px 0 10px 26px;position:relative;border-bottom:1px solid rgba(45,212,191,0.07);display:flex;align-items:center}
-.offer-includes li:last-child{border-bottom:none}
-.offer-includes li i{position:absolute;left:0;color:var(--teal2);font-size:15px}
-.offer-cta{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--teal);color:white;padding:18px 40px;border-radius:12px;font-size:18px;font-weight:700;text-decoration:none;transition:all .2s;margin-bottom:1rem;width:100%}
-.offer-cta:hover{background:var(--teal2);color:var(--navy);transform:translateY(-2px)}
-.offer-guarantee{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:0.75rem 0;font-size:13px;color:#94A3B8;border-top:1px solid rgba(45,212,191,0.1);margin-top:0.75rem}
-.offer-guarantee i{color:var(--teal2);font-size:14px;flex-shrink:0}
-.offer-guarantee .g-divider{color:#334155}
-.offer-guarantee a{color:var(--teal2)}
+/* SUCCESS STORIES */
+.story-card{border-radius:14px;border:1px solid var(--border);padding:20px;margin-bottom:14px;background:var(--surface)}
+.story-source{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
+.story-quote{font-size:16px;font-style:italic;color:var(--text);line-height:1.7;margin-bottom:14px;padding-left:14px;border-left:3px solid #7F77DD}
+.story-detail{font-size:14px;color:var(--text2);line-height:1.5;margin-bottom:14px}
+.story-link{display:inline-block;font-size:14px;font-weight:700;color:#fff;background:#2D1B69;padding:10px 18px;border-radius:8px;text-decoration:none;border:1px solid #534AB7}
+.story-link:hover{background:#3D2580}
+.story-tag{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px}
+.tag-long{background:#EDE9FE;color:#4C1D95}
+.tag-nerve{background:#CCFBF1;color:#0F766E}
+.tag-won{background:#DCFCE7;color:#14532D}
 
-.offer-downsell{text-align:center;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(45,212,191,0.1)}
-.offer-downsell span{font-size:13px;color:#475569}
-.offer-downsell a{font-size:13px;font-weight:600;color:var(--teal2);text-decoration:none;margin-left:6px}
-.offer-downsell a:hover{color:white}
-.offer-right h3{font-family:'DM Serif Display',serif;font-size:28px;color:#F0F9FF;margin-bottom:1.25rem;line-height:1.2}
-.offer-steps{list-style:none}
-.offer-step{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid rgba(45,212,191,0.07)}
-.offer-step:last-child{border-bottom:none}
-.step-num{width:28px;height:28px;background:rgba(13,148,136,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;color:var(--teal2);flex-shrink:0;margin-top:2px}
-.offer-step p{font-size:14.5px;color:var(--on-dark);line-height:1.6}
-.offer-step p strong{color:#CBD5E1}
-.gpt-callout{background:rgba(45,212,191,0.05);border:1px solid var(--border-dark);border-radius:14px;padding:1.5rem;margin-top:1.5rem}
-.gpt-callout-title{font-size:15px;font-weight:700;color:#F0F9FF;margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.gpt-callout-title i{color:var(--teal2)}
-.gpt-callout p{font-size:13px;color:#94A3B8;line-height:1.65}
+.hard-days-box{background:#1a0a2e;border-radius:14px;padding:1.5rem;margin-bottom:1rem}
+.hd-title{font-size:20px;font-weight:700;color:#F0E6FF;margin-bottom:0.75rem}
+.hd-item{background:rgba(255,255,255,0.06);border-radius:10px;padding:12px 16px;margin-bottom:10px;font-size:15px;color:#D6BCFA;line-height:1.5}
+.hd-item strong{color:#9AE6B4;display:block;font-size:13px;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px}
 
-/* ── FAQ ──────────────────────────────────────────────────────────── */
-.faq{background:var(--cream);padding:5rem 2.5rem}
-.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 3rem;margin-top:2rem}
-.faq-item{border-bottom:1px solid var(--border);padding:1.25rem 0}
-.faq-q{font-size:15.5px;font-weight:700;color:var(--text);margin-bottom:0.6rem}
-.faq-a{font-size:14.5px;color:var(--text2);line-height:1.8}
+/* SUPPLEMENT TABLE */
+.supp-table{width:100%;border-collapse:collapse;font-size:15px}
+.supp-table th{background:var(--surface2);padding:11px 14px;text-align:left;font-weight:700;font-size:13px;letter-spacing:0.05em;text-transform:uppercase;color:var(--text2);border-bottom:2px solid var(--border2)}
+.supp-table td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5}
+.supp-table tr:last-child td{border-bottom:none}
+.supp-table tr:hover td{background:var(--surface2)}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;margin:2px 2px 2px 0}
+.tag-m{background:#DBEAFE;color:#1E40AF}
+.tag-e{background:#DCFCE7;color:#14532D}
+.tag-n{background:#FEF3C7;color:#92400E}
 
-/* ── DISCLAIMER ───────────────────────────────────────────────────── */
-.disclaimer{background:var(--navy);padding:3.5rem 2.5rem;border-top:1px solid var(--border-dark)}
-.disclaimer-inner{max-width:960px;margin:0 auto}
-.disclaimer-title{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#475569;margin-bottom:1rem;display:flex;align-items:center;gap:8px}
-.disclaimer-title i{color:#475569;font-size:15px}
-.disclaimer p{font-size:13px;color:var(--on-dark);line-height:1.85;margin-bottom:0.75rem}
-.disclaimer p:last-child{margin-bottom:0}
-.disclaimer a{color:#64748B;text-decoration:none}
-.disclaimer a:hover{color:var(--on-dark)}
+.timing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:1.25rem}
+.timing-block{border-radius:var(--radius);padding:16px;border:1px solid var(--border)}
+.timing-block.morning{background:#FFF7ED;border-color:#FED7AA}
+.timing-block.midday{background:#F0FDF4;border-color:#BBF7D0}
+.timing-block.evening{background:#EDE9FE;border-color:#C4B5FD}
+.timing-title{font-size:14px;font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.06em}
+.timing-block.morning .timing-title{color:#92400E}
+.timing-block.midday .timing-title{color:#14532D}
+.timing-block.evening .timing-title{color:#4C1D95}
+.timing-item{font-size:14px;padding:5px 0 5px 14px;position:relative;line-height:1.4;color:var(--text)}
+.timing-item::before{content:'•';position:absolute;left:0;font-weight:700}
+.timing-block.morning .timing-item::before{color:#D97706}
+.timing-block.midday .timing-item::before{color:#16A34A}
+.timing-block.evening .timing-item::before{color:#7C3AED}
 
-/* ── FOOTER ───────────────────────────────────────────────────────── */
-footer{background:#060D1A;padding:2.5rem 2.5rem;border-top:1px solid rgba(45,212,191,0.06)}
-.footer-inner{max-width:960px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
-.footer-logo{font-family:'DM Serif Display',serif;font-size:20px;color:#94A3B8}
-.footer-logo span{color:#2DD4BF}
-.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap}
-.footer-links a{font-size:14px;color:#64748B;text-decoration:none;transition:color .2s}
-.footer-links a:hover{color:var(--teal)}
-.footer-copy{font-size:12px;color:#475569;width:100%;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(45,212,191,0.04)}
+/* EXERCISES */
+.ex-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ex-card{border-radius:var(--radius);border:1px solid var(--border);padding:18px;background:var(--surface)}
+.ex-icon{font-size:28px;margin-bottom:8px}
+.ex-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px}
+.ex-steps{margin-top:10px;padding-left:0;list-style:none}
+.ex-steps li{font-size:14px;color:var(--text2);padding:4px 0 4px 18px;position:relative;line-height:1.5}
+.ex-steps li::before{content:'→';position:absolute;left:0;color:var(--teal);font-weight:700}
+.vagus-link{display:inline-block;margin-top:12px;background:#7F77DD;color:#fff;font-size:15px;font-weight:700;padding:12px 24px;border-radius:10px;text-decoration:none}
+.vagus-link:hover{background:#6B5FC7}
 
-/* ── CONDITION NOTE ───────────────────────────────────────────────── */
-.condition-note{background:rgba(245,158,11,0.06);border-left:4px solid var(--gold);border-radius:0 12px 12px 0;padding:1.25rem 1.5rem;margin-top:1.5rem}
-.condition-note p{font-size:15px;color:var(--text2);line-height:1.8}
-.condition-note strong{color:var(--text)}
+/* MORNING */
+.morning-commitment{background:linear-gradient(135deg,#1a0a2e 0%,#0D3D3A 100%);border-radius:18px;padding:1.75rem;margin-bottom:1rem}
+.mc-title{font-size:22px;font-weight:700;color:#F0E6FF;margin-bottom:0.5rem}
+.mc-time{font-size:48px;font-weight:700;color:#9AE6B4;margin-bottom:0.75rem;letter-spacing:-1px}
+.mc-sub{font-size:15px;color:#7C6A9A;margin-bottom:1.25rem;line-height:1.5}
+.mc-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:1.5rem}
+.mc-step{background:rgba(255,255,255,0.06);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px}
+.mc-step .step-num{font-size:20px;font-weight:700;color:#9AE6B4;min-width:28px}
+.mc-step .step-text{font-size:15px;color:#D6BCFA;line-height:1.4}
 
-/* ── RESPONSIVE ───────────────────────────────────────────────────── */
-@media(max-width:1024px){
-  .hero{grid-template-columns:1fr;min-height:auto;padding:5rem 2.5rem 4rem}
-  .hero-graphic{display:none}
-  .bento-3{grid-column:span 6}
-  .bento-2{grid-column:span 3}
-  .process-rail{grid-template-columns:repeat(3,1fr);row-gap:2rem}
-  .process-rail::before{display:none}
-  .supps-split{grid-template-columns:1fr}
-  .offer-inner{grid-template-columns:1fr}
-  .faq-grid{grid-template-columns:1fr}
-  .who-split{grid-template-columns:1fr}
-}
+/* HISTORY */
+.hcard{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:17px 20px;margin-bottom:13px}
+.hdate{font-size:15px;color:var(--text2);margin-bottom:9px;font-weight:700}
+.hbadges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:7px}
+.badge{font-size:13px;padding:4px 12px;border-radius:20px;font-weight:700}
+.bc{background:var(--red-light);color:#991B1B}
+.bb{background:#DBEAFE;color:#1E40AF}
+.bt{background:var(--green-light);color:#14532D}
+.ba{background:var(--amber-light);color:#92400E}
+.bg{background:#F1F5F9;color:#475569}
+.bp{background:var(--purple-light);color:#4C1D95}
+.hnote{font-size:15px;color:var(--text2);line-height:1.5;margin-top:8px}
+.hsupps{font-size:13px;color:var(--text3);margin-top:5px}
+.empty{font-size:17px;color:var(--text3);text-align:center;padding:3rem 0}
+
 @media(max-width:768px){
-  nav{padding:1rem 1.25rem}
-  .hero,.process,.stats,.features,.supps,.stories,.who,.addons,.kit-section,.compare,.offer,.faq,.disclaimer{padding-left:1.25rem;padding-right:1.25rem}
-  .bento-2{grid-column:span 6}
-  .stories-grid{grid-template-columns:1fr}
-  .stats-grid{grid-template-columns:1fr;max-width:340px;margin:0 auto}
-  .addon-grid{grid-template-columns:1fr}
-  .process-rail{grid-template-columns:1fr 1fr}
-  .compare-table{font-size:13px}
+  .wrap{padding:1rem 0.85rem 3rem}
+  .vgrid{grid-template-columns:repeat(2,1fr)}
+  .vgrid2{grid-template-columns:1fr}
+  .grid2,.grid3,.timing-grid,.ex-grid,.phase-grid,.rule-grid{grid-template-columns:1fr}
+  .milestone-grid{grid-template-columns:repeat(2,1fr)}
+  .hero{padding:1.5rem 1.25rem 1.25rem;border-radius:14px}
+  .hero-title{font-size:26px}
+  .hero-sub{font-size:14px;margin-bottom:1.25rem}
+  .affirmation p{font-size:15px}
+  .mc-time{font-size:38px}
+  .taper-header{flex-direction:column;gap:10px}
+  .taper-header-right{text-align:left}
+  .tabs{border-radius:10px}
+  .tab{font-size:13px;padding:11px 4px;min-width:60px}
+  .card{padding:1.25rem 1.1rem}
+  .card-title{font-size:19px}
+  .card-sub{font-size:14px}
+  .field-label{font-size:14px}
+  input[type="text"],input[type="date"],input[type="number"]{font-size:16px;height:46px}
+  textarea{font-size:16px}
+  .sb{font-size:17px;padding:10px 12px;min-width:46px}
+  .pill{font-size:14px;padding:8px 14px}
+  .btn{font-size:16px;padding:15px}
+  .supp-table{font-size:13px}
+  .supp-table th,.supp-table td{padding:10px 10px}
+  .morning-commitment{padding:1.25rem}
+  .mc-title{font-size:19px}
+  .story-card{padding:16px}
+  .story-quote{font-size:15px}
+  .taper-header-left .th-dose{font-size:30px}
+  .phase-grid{grid-template-columns:1fr}
+  .cal-hero{padding:1.25rem}
+  .ms-card{padding:14px 12px}
+  .ms-emoji{font-size:28px}
+  .ms-label{font-size:13px}
+  .unlock-box{padding:2rem 1.5rem}
+  .unlock-emoji{font-size:56px}
+  .unlock-title{font-size:20px}
+  .ex-grid{grid-template-columns:1fr}
+  .vc .icon{font-size:26px}
+  .vc .vlabel{font-size:15px}
+  .vc .vdetail{font-size:13px}
 }
+@media(max-width:420px){
+  .vgrid{grid-template-columns:1fr 1fr}
+  .milestone-grid{grid-template-columns:1fr 1fr}
+  .tab{font-size:12px;padding:10px 3px;min-width:50px}
+  .hero-title{font-size:22px}
+  .mc-time{font-size:32px}
+  .sb{font-size:16px;padding:9px 10px;min-width:40px}
+  .taper-header-left .th-dose{font-size:26px}
+  .scale-row{gap:6px}
+  .pill-row{gap:6px}
+  .pill{font-size:13px;padding:7px 12px}
+  .card-title{font-size:17px}
+}
+/* CALENDAR */
+.cal-hero{background:#1a0a2e;border-radius:18px;padding:1.75rem;margin-bottom:1rem;text-align:center}
+.cal-hero-title{font-size:26px;font-weight:700;color:#F0E6FF;margin-bottom:0.4rem}
+.cal-hero-sub{font-size:15px;color:#7C6A9A;margin-bottom:1.5rem}
+.cal-progress-bar{background:rgba(255,255,255,0.1);border-radius:20px;height:18px;overflow:hidden;margin-bottom:8px}
+.cal-progress-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#7F77DD,#2DD4BF);transition:width 0.8s ease}
+.cal-progress-label{font-size:13px;color:#9F7AEA;text-align:right}
+.milestone-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:1rem}
+.ms-card{border-radius:14px;padding:20px 16px;text-align:center;border:2px solid transparent;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden}
+.ms-card.locked{background:var(--surface2);border-color:var(--border);opacity:0.6}
+.ms-card.unlocked{background:#1a0a2e;border-color:#534AB7}
+.ms-card.claimed{background:#0F3320;border-color:#16A34A}
+.ms-card.current{background:#2D1B69;border-color:#9F7AEA;box-shadow:0 0 0 3px rgba(159,122,234,0.3)}
+.ms-emoji{font-size:36px;margin-bottom:8px;display:block}
+.ms-dose{font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px}
+.ms-card.locked .ms-dose{color:var(--text3)}
+.ms-card.unlocked .ms-dose{color:#9F7AEA}
+.ms-card.claimed .ms-dose{color:#4ADE80}
+.ms-card.current .ms-dose{color:#C4B5FD}
+.ms-label{font-size:14px;font-weight:600;margin-bottom:4px}
+.ms-card.locked .ms-label{color:var(--text3)}
+.ms-card.unlocked .ms-label,.ms-card.current .ms-label{color:#F0E6FF}
+.ms-card.claimed .ms-label{color:#86EFAC}
+.ms-reward{font-size:12px;line-height:1.4}
+.ms-card.locked .ms-reward{color:var(--text3)}
+.ms-card.unlocked .ms-reward,.ms-card.current .ms-reward{color:#9F7AEA}
+.ms-card.claimed .ms-reward{color:#4ADE80}
+.ms-badge{position:absolute;top:10px;right:10px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px}
+.ms-card.claimed .ms-badge{background:#16A34A;color:#fff}
+.ms-card.current .ms-badge{background:#534AB7;color:#fff}
+.ms-card.unlocked .ms-badge{background:#3D2580;color:#D6BCFA}
+.unlock-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center}
+.unlock-modal.show{display:flex}
+.unlock-box{background:#1a0a2e;border:2px solid #534AB7;border-radius:20px;padding:2.5rem 2rem;text-align:center;max-width:380px;width:90%;animation:popIn 0.3s ease}
+@keyframes popIn{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
+.unlock-emoji{font-size:72px;margin-bottom:1rem;display:block}
+.unlock-title{font-size:24px;font-weight:700;color:#F0E6FF;margin-bottom:0.5rem}
+.unlock-dose{font-size:16px;color:#9F7AEA;margin-bottom:1rem}
+.unlock-reward{font-size:16px;color:#9AE6B4;line-height:1.6;margin-bottom:1.5rem;font-style:italic}
+.unlock-close{background:#534AB7;color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit}
+.unlock-close:hover{background:#6B5FC7}
+.confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999}
 </style>
 </head>
 <body>
-
-<!-- NAV -->
-<nav>
-  <a href="/" class="logo">Gaba<span>Down</span></a>
-  <div class="nav-links">
-    <a href="/blog/" class="nav-link">Blog</a>
-    <a href="/for-healthcare-providers.html" class="nav-link">For Providers</a>
-    <a href="#apply" class="nav-cta">Get Your Journal</a>
-  </div>
-</nav>
+<div class="wrap">
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-eyebrow">
-      <i class="ti ti-shield-check"></i>
-      Long-term gabapentin use · Supervised reduction support
+<div class="hero">
+  <div class="hero-eyebrow">Your vision</div>
+  <div class="hero-title">The life I'm building</div>
+  <div class="hero-sub">Calgary SE &nbsp;·&nbsp; Condo &nbsp;·&nbsp; Garden &nbsp;·&nbsp; Freedom</div>
+  <div class="vgrid">
+    <div class="vc vc-purple"><div class="icon">🏡</div><div class="vlabel">My condo</div><div class="vdetail">SE Calgary, my own space, garden out back</div></div>
+    <div class="vc vc-teal"><div class="icon">🌿</div><div class="vlabel">My garden</div><div class="vdetail">Hands in the soil, watching things grow</div></div>
+    <div class="vc vc-green"><div class="icon">💊</div><div class="vlabel">80% fewer meds</div><div class="vdetail">Clear, present, free from the fog</div></div>
+    <div class="vc vc-red"><div class="icon">🎨</div><div class="vlabel">Making art</div><div class="vdetail">Creating something beautiful with my hands</div></div>
+    <div class="vc vc-indigo"><div class="icon">✈️</div><div class="vlabel">Travel with ease</div><div class="vdetail">On planes, no anxiety, going places</div></div>
+    <div class="vc vc-cyan"><div class="icon">🧑‍🤝‍🧑</div><div class="vlabel">New friends</div><div class="vdetail">People who adore me, good community</div></div>
+    <div class="vc vc-lime"><div class="icon">🦽</div><div class="vlabel">Moving my body</div><div class="vdetail">Walker, post-surgery, doing it my way</div></div>
+    <div class="vc vc-rose"><div class="icon">💰</div><div class="vlabel">$2,000/month</div><div class="vdetail">Supplemental income, skills, volunteering</div></div>
+  </div>
+  <div class="vgrid2">
+    <div class="vc vc-purple vc-row"><div class="icon">👨‍👩‍👧</div><div><div class="vlabel">Lots of time with my kids</div><div class="vdetail">Present, connected, truly there</div></div></div>
+    <div class="vc vc-teal vc-row"><div class="icon">🦶</div><div><div class="vlabel">Successful surgery</div><div class="vdetail">Back and foot, recovered, relief</div></div></div>
+  </div>
+  <div class="affirmation">
+    <p>"Ease and peace is not something I'm waiting for — it's what I'm walking toward, one day at a time."</p>
+    <span>Your north star</span>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs" id="tab-bar">
+  <button class="tab on"  data-page="soul">My why</button>
+  <button class="tab"     data-page="taper">Taper plan</button>
+  <button class="tab"     data-page="stories">Success stories</button>
+  <button class="tab"     data-page="morning">Morning</button>
+  <button class="tab"     data-page="supps">Supplements</button>
+  <button class="tab"     data-page="exercises">Exercises</button>
+  <button class="tab"     data-page="daily">Daily log</button>
+  <button class="tab"     data-page="history">History</button>
+  <button class="tab"     data-page="calendar">My calendar</button>
+</div>
+
+<!-- MY WHY -->
+<div id="pg-soul" class="page on">
+  <div class="card">
+    <div class="card-eyebrow">Motivation</div>
+    <div class="accent-purple">
+      <div class="card-title">Why I'm doing this</div>
+      <div class="card-sub">This is your anchor. Write it for yourself — for the hard days, the tired days, the days you want to stop.</div>
     </div>
-    <h1>Your life is waiting on the <em>other side</em> of this medication</h1>
-    <p class="hero-sub">Years on high-dose gabapentin can bring real costs — cognitive fog, emotional blunting, weight gain, dependency. When you're ready to reduce carefully and safely, GabaDown builds your structured taper framework and healthcare team summary, so your doctor can review, approve, and support it.</p>
-    <div class="hero-cta-group">
-      <a href="#apply" class="hero-cta">Get Your Custom Journal <i class="ti ti-arrow-right"></i></a>
-      <div class="hero-trust">
-        <div class="hero-trust-item"><i class="ti ti-currency-dollar"></i><span>$497 USD — one time</span></div>
-        <div class="hero-trust-item"><i class="ti ti-calendar"></i><span>Delivered in 7 days</span></div>
-        <div class="hero-trust-item"><i class="ti ti-map"></i><span>US &amp; Canada</span></div>
-        <div class="hero-trust-item"><i class="ti ti-stethoscope"></i><span>Doctor supervision required</span></div>
+    <div class="prompts">
+      <p>What do I want my days to feel like again?</p>
+      <p>Who am I doing this for — including myself?</p>
+      <p>What has this medication taken from me that I want back?</p>
+      <p>What would feel like a victory, even a small one?</p>
+    </div>
+    <textarea id="motivation" placeholder="Write as much or as little as you want. You can come back and add to this anytime..." style="min-height:150px" oninput="soulSave()"></textarea>
+  </div>
+  <div class="card">
+    <div class="card-eyebrow">What I'm learning</div>
+    <div class="accent-amber">
+      <div class="card-title">What I'm learning about myself from this chapter</div>
+      <div class="card-sub">This process is revealing things. What are you noticing about your strength, your body, your needs?</div>
+    </div>
+    <div class="prompts">
+      <p>What has surprised me about my own resilience?</p>
+      <p>What does my body seem to need that I hadn't noticed before?</p>
+      <p>What old stories about myself is this experience changing?</p>
+      <p>What would I tell someone else going through this?</p>
+    </div>
+    <textarea id="learning" placeholder="There are no wrong answers here. This is yours..." style="min-height:150px" oninput="soulSave()"></textarea>
+  </div>
+  <div class="card">
+    <div class="card-eyebrow">Vision</div>
+    <div class="accent-teal">
+      <div class="card-title">How it will feel to be living the best version of myself</div>
+      <div class="card-sub">Sensory, specific, present tense. Not goals — a lived experience. What does a Tuesday morning feel like when you're there?</div>
+    </div>
+    <div class="prompts">
+      <p>I wake up and the first thing I notice is...</p>
+      <p>My body feels... when I move through a room</p>
+      <p>I can smell my garden and it smells like...</p>
+      <p>My kids are around me and I feel...</p>
+      <p>The quality of my mornings in my condo is...</p>
+      <p>On the plane, I feel... as I look out the window</p>
+    </div>
+    <textarea id="vision" placeholder="Write it as if you're already there. The warmth of the morning, the sound of the garden, the feeling of your own feet on the floor in your condo..." style="min-height:190px" oninput="soulSave()"></textarea>
+  </div>
+  <div class="saved-msg" id="soul-msg"></div>
+</div>
+
+<!-- TAPER PLAN -->
+<div id="pg-taper" class="page">
+
+  <div class="taper-header">
+    <div class="taper-header-left">
+      <div class="th-label">Starting dose</div>
+      <div class="th-dose">2,700 mg/day</div>
+      <div class="th-sub">3 doses of 900mg · supervised taper</div>
+    </div>
+    <div class="taper-header-right">
+      <div class="th-goal">80% reduction goal</div>
+      <div class="th-goal-dose">540 mg/day</div>
+      <div style="font-size:13px;color:#7C6A9A;margin-top:4px">Timeline: 12–18 months</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-eyebrow">The golden rules</div>
+    <div class="rule-grid">
+      <div class="rule-box purple">
+        <div class="rule-title">Drop size</div>
+        <div class="rule-item">Never drop more than 100mg at a time</div>
+        <div class="rule-item">Long-term users need tiny steps</div>
+        <div class="rule-item">Slower than your doctor suggests is okay</div>
+      </div>
+      <div class="rule-box teal">
+        <div class="rule-title">Hold time</div>
+        <div class="rule-item">Stay at each new dose for 2–4 weeks</div>
+        <div class="rule-item">Let your nervous system settle fully</div>
+        <div class="rule-item">No rushing — this is a long game</div>
+      </div>
+      <div class="rule-box amber">
+        <div class="rule-title">If symptoms hit hard</div>
+        <div class="rule-item">Go back up 100mg — this is NOT failure</div>
+        <div class="rule-item">Stabilise for 1–2 weeks, then retry</div>
+        <div class="rule-item">Going back up stops symptoms in 3 days</div>
+      </div>
+      <div class="rule-box red">
+        <div class="rule-title">Never do this</div>
+        <div class="rule-item">Never stop suddenly — seizure risk</div>
+        <div class="rule-item">Never drop two doses at once</div>
+        <div class="rule-item">Never drop while unwell or stressed</div>
       </div>
     </div>
   </div>
-  <!-- Ambient taper path graphic -->
-  <svg class="hero-graphic" viewBox="0 0 600 700" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M 80,60 C 120,60 160,100 200,180 C 240,260 260,360 320,450 C 380,540 460,600 560,640" stroke="rgba(45,212,191,0.18)" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="80" cy="60" r="32" fill="rgba(45,212,191,0.07)" stroke="rgba(45,212,191,0.15)" stroke-width="1.5"/>
-    <circle cx="80" cy="60" r="16" fill="rgba(45,212,191,0.12)"/>
-    <circle cx="200" cy="180" r="22" fill="rgba(45,212,191,0.05)" stroke="rgba(45,212,191,0.1)" stroke-width="1.5"/>
-    <circle cx="200" cy="180" r="11" fill="rgba(45,212,191,0.1)"/>
-    <circle cx="320" cy="450" r="14" fill="rgba(45,212,191,0.04)" stroke="rgba(45,212,191,0.08)" stroke-width="1.5"/>
-    <circle cx="320" cy="450" r="7" fill="rgba(45,212,191,0.08)"/>
-    <circle cx="480" cy="590" r="10" fill="rgba(45,212,191,0.06)"/>
-    <text x="115" y="64" font-family="IBM Plex Mono, monospace" font-size="11" fill="rgba(45,212,191,0.35)">Starting dose</text>
-    <text x="235" y="184" font-family="IBM Plex Mono, monospace" font-size="11" fill="rgba(45,212,191,0.25)">Month 4</text>
-    <text x="355" y="454" font-family="IBM Plex Mono, monospace" font-size="11" fill="rgba(45,212,191,0.2)">Month 10</text>
-    <text x="495" y="594" font-family="IBM Plex Mono, monospace" font-size="11" fill="rgba(45,212,191,0.18)">Goal</text>
-  </svg>
-</section>
 
-<!-- HOW IT WORKS — HORIZONTAL PROCESS RAIL -->
-<section class="process">
-  <div class="process-inner">
-    <div class="process-header">
-      <h2>From intake to a doctor-ready taper schedule in 7 days</h2>
-      <p>The gap between "my doctor said I can reduce" and an actual structured plan you can follow — that's what GabaDown fills.</p>
-    </div>
-    <div class="process-rail">
-      <div class="process-step">
-        <div class="process-num">01</div>
-        <div class="process-step-title">Complete your intake</div>
-        <div class="process-step-desc">Your dose, history, doctor's direction, and goals</div>
+  <div class="card">
+    <div class="card-eyebrow">Phase-by-phase reduction plan</div>
+    <div class="card-sub" style="margin-bottom:1rem">Each phase is a target range — your actual pace may be faster or slower. That is completely fine. The goal is arriving, not speed.</div>
+    <div class="phase-grid">
+      <div class="phase-card active">
+        <div class="phase-num">Phase 1 · Months 1–3</div>
+        <div class="phase-dose">2,700 → 2,400 mg</div>
+        <div class="phase-detail">Drop one 100mg reduction every 2–3 weeks. Start by removing 100mg from the smallest dose of the day. Build confidence that drops are manageable.</div>
       </div>
-      <div class="process-step">
-        <div class="process-num">02</div>
-        <div class="process-step-title">We build your draft framework</div>
-        <div class="process-step-desc">Phase-by-phase reduction schedule based on published guidelines</div>
+      <div class="phase-card future">
+        <div class="phase-num">Phase 2 · Months 3–6</div>
+        <div class="phase-dose">2,400 → 1,800 mg</div>
+        <div class="phase-detail">Continue 100mg drops every 2–3 weeks. Supplements should be well established by now. CBD and Lion's Mane filling the gap.</div>
       </div>
-      <div class="process-step highlight">
-        <div class="process-num">03</div>
-        <div class="process-step-title">Take it to your doctor</div>
-        <div class="process-step-desc">One-page healthcare summary — your doctor reviews, adjusts if needed, and approves it</div>
+      <div class="phase-card future">
+        <div class="phase-num">Phase 3 · Months 6–9</div>
+        <div class="phase-dose">1,800 → 1,200 mg</div>
+        <div class="phase-detail">The middle phase. Nerve repair supplements doing significant work now. Exercises helping maintain mobility and nerve signalling.</div>
       </div>
-      <div class="process-step">
-        <div class="process-num">04</div>
-        <div class="process-step-title">Full journal delivered</div>
-        <div class="process-step-desc">Built around the approved plan, ready to open on any device</div>
+      <div class="phase-card future">
+        <div class="phase-num">Phase 4 · Months 9–12</div>
+        <div class="phase-dose">1,200 → 900 mg</div>
+        <div class="phase-detail">Getting into the lower range. Sleep and anxiety support from Reishi and magnesium especially important here. Vagus nerve work daily.</div>
       </div>
-      <div class="process-step">
-        <div class="process-num">05</div>
-        <div class="process-step-title">Track every day</div>
-        <div class="process-step-desc">Data you and your doctor actually need at every appointment</div>
+      <div class="phase-card future">
+        <div class="phase-num">Phase 5 · Months 12–15</div>
+        <div class="phase-dose">900 → 600 mg</div>
+        <div class="phase-detail">Approaching the 80% reduction goal. Drops may feel harder here — go even slower if needed. 50mg drops are valid. You are almost there.</div>
       </div>
-      <div class="process-step">
-        <div class="process-num">06</div>
-        <div class="process-step-title">Follow-up call</div>
-        <div class="process-step-desc">30 minutes to walk through everything together</div>
+      <div class="phase-card future">
+        <div class="phase-num">Phase 6 · Month 15–18</div>
+        <div class="phase-dose">600 → 540 mg</div>
+        <div class="phase-detail">Goal reached. 80% reduction. Celebrate this. Decide with your doctor whether to continue reducing or hold here as your maintenance dose.</div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- STORY -->
-<section style="background:var(--white);padding:5.5rem 2.5rem">
-  <div class="wrap">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;margin-bottom:2.5rem">
-      <div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;display:flex;align-items:center;gap:8px"><i class="ti ti-heart"></i> Why GabaDown exists</div>
-        <h2 style="font-size:clamp(28px,3.5vw,40px);margin-bottom:1.25rem;color:var(--text)">I built this because I looked for help for my mother — and found nothing.</h2>
-        <a href="/blog/" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--teal);text-decoration:none;margin-bottom:1.5rem"><i class="ti ti-book"></i> Read her story</a>
-        <p style="font-size:16px;color:var(--text2);line-height:1.85;margin-bottom:1rem">My mother has been on 2,700mg of gabapentin for years. When she and her doctor decided it was time to reduce, we went looking for a structured roadmap. Something that took seriously how long this takes and how hard it is.</p>
-        <p style="font-size:16px;color:var(--text2);line-height:1.85;margin-bottom:1rem">There was nothing. Not a single resource built specifically for long-term users trying to reduce carefully and sustainably.</p>
-        <p style="font-size:16px;color:var(--text2);line-height:1.85">So I built it myself. I spent weeks researching taper protocols, the research base, and what actually helps people get through this. My mom's journey — her real numbers, her hard weeks and her wins — is shared with GabaDown Circle members as it unfolds.</p>
+  <div class="card">
+    <div class="card-eyebrow">What to expect after each drop</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+      <div style="background:#EDE9FE;border-radius:10px;padding:14px">
+        <div style="font-size:13px;font-weight:700;color:#4C1D95;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em">Days 1–3</div>
+        <div style="font-size:14px;color:#5B21B6;line-height:1.6">Possibly nothing. Or mild anxiety, restlessness, slightly worse sleep. This is normal and temporary.</div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:1.25rem">
-        <div style="background:var(--navy);border-radius:16px;padding:2rem;border-left:4px solid var(--teal2)">
-          <p style="font-family:'DM Serif Display',serif;font-size:20px;font-style:italic;color:#E2E8F0;line-height:1.7;margin-bottom:1rem">"Ease and peace is not something I'm waiting for — it's what I'm walking toward, one day at a time."</p>
-          <div style="font-size:13px;color:#94A3B8;display:flex;align-items:center;gap:6px"><i class="ti ti-user" style="color:var(--teal2)"></i> My mom — starting dose 2,700mg · Sharing her journey in the Circle</div>
-        </div>
-        <div style="background:rgba(13,148,136,0.06);border:1px solid rgba(13,148,136,0.2);border-radius:12px;padding:1.25rem 1.5rem;display:flex;gap:10px;align-items:flex-start">
-          <i class="ti ti-users" style="color:var(--teal);font-size:20px;flex-shrink:0;margin-top:2px"></i>
-          <div>
-            <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px">Follow the journey</div>
-            <div style="font-size:13px;color:var(--text2);line-height:1.6">GabaDown Circle members get real-time updates on my mom's taper — her dose, her symptoms, what's working, and what isn't. The only place you'll find the full story.</div>
-          </div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <a href="/blog/moms-gabapentin-journey/" style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--navy);color:var(--teal2);padding:13px 16px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;border:1px solid rgba(45,212,191,0.2)"><i class="ti ti-book"></i> Read her story</a>
-          <a href="https://buy.stripe.com/eVq4gygzdgfbav67qu83C02" style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--teal);color:white;padding:13px 16px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none"><i class="ti ti-users"></i> Join the Circle</a>
-        </div>
+      <div style="background:#FEF3C7;border-radius:10px;padding:14px">
+        <div style="font-size:13px;font-weight:700;color:#92400E;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em">Days 4–7</div>
+        <div style="font-size:14px;color:#78350F;line-height:1.6">Peak adjustment period. Use valerian for sleep, L-Theanine for anxiety, CBD for pain. Stay consistent with all supplements.</div>
       </div>
-    </div>
-    <!-- Condition note: full width below the two-column grid -->
-    <div style="background:rgba(245,158,11,0.06);border-left:4px solid var(--gold);border-radius:0 12px 12px 0;padding:1.5rem 2rem">
-      <p style="font-size:15px;color:var(--text2);line-height:1.85"><strong style="color:var(--text)">A note on your underlying condition:</strong> GabaDown helps you reduce gabapentin safely — it doesn't make the original pain disappear. What it does is help separate the medication's side effects from your underlying condition, so you and your doctor can make clearer decisions about both. As doses come down, it's critical to understand what's withdrawal and what might be a return of symptoms — your journal addresses this directly.</p>
-    </div>
-  </div>
-</section>
-
-
-<!-- WHY PEOPLE REDUCE -->
-<section style="background:var(--navy2);padding:5.5rem 2.5rem;border-top:1px solid var(--border-dark);border-bottom:1px solid var(--border-dark)">
-  <div class="wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start">
-    <div>
-      <div class="eyebrow eyebrow-light"><i class="ti ti-alert-triangle"></i> Why people reduce</div>
-      <h2 style="font-size:clamp(26px,3.5vw,38px);color:#F8FAFC;margin-bottom:1.25rem;line-height:1.15">The side effects that make people search for a way out</h2>
-      <p style="color:var(--on-dark);line-height:1.85;margin-bottom:1.25rem;font-size:16px">Long-term high-dose gabapentin can be effective — and for many people, over time it begins to cost more than it gives. If you're searching for a way to reduce, you probably already know this feeling. You're not imagining it.</p>
-      <p style="color:#94A3B8;line-height:1.75;font-size:14.5px">This is not about stopping gabapentin. It's about reducing it carefully — under medical supervision — until the side effects are manageable and your quality of life is yours again.</p>
-    </div>
-    <div>
-      <div style="display:flex;flex-direction:column;gap:12px">
-        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1rem 1.25rem;display:flex;gap:12px;align-items:flex-start">
-          <i class="ti ti-cloud-fog" style="color:var(--teal2);font-size:22px;flex-shrink:0;margin-top:2px"></i>
-          <div><div style="font-size:14px;font-weight:700;color:#F0F9FF;margin-bottom:3px">Cognitive fog</div><div style="font-size:13px;color:var(--on-dark);line-height:1.6">Difficulty concentrating, memory lapses, the feeling of thinking through cotton wool — common at higher doses and worsening over time.</div></div>
-        </div>
-        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1rem 1.25rem;display:flex;gap:12px;align-items:flex-start">
-          <i class="ti ti-mood-empty" style="color:#818CF8;font-size:22px;flex-shrink:0;margin-top:2px"></i>
-          <div><div style="font-size:14px;font-weight:700;color:#F0F9FF;margin-bottom:3px">Emotional blunting</div><div style="font-size:13px;color:var(--on-dark);line-height:1.6">Feeling flat, disconnected, or less emotionally present than you used to be — a reduced emotional range that affects relationships and wellbeing.</div></div>
-        </div>
-        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1rem 1.25rem;display:flex;gap:12px;align-items:flex-start">
-          <i class="ti ti-battery-1" style="color:#FCD34D;font-size:22px;flex-shrink:0;margin-top:2px"></i>
-          <div><div style="font-size:14px;font-weight:700;color:#F0F9FF;margin-bottom:3px">Fatigue &amp; weight gain</div><div style="font-size:13px;color:var(--on-dark);line-height:1.6">Persistent tiredness that doesn't improve with rest, and significant weight gain that's very difficult to reverse while remaining on higher doses.</div></div>
-        </div>
-        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1rem 1.25rem;display:flex;gap:12px;align-items:flex-start">
-          <i class="ti ti-lock" style="color:#F87171;font-size:22px;flex-shrink:0;margin-top:2px"></i>
-          <div><div style="font-size:14px;font-weight:700;color:#F0F9FF;margin-bottom:3px">Physical dependency</div><div style="font-size:13px;color:var(--on-dark);line-height:1.6">The anxiety when a prescription is late, the fear of missing a dose, the sense that the medication controls you rather than the other way around.</div></div>
-        </div>
+      <div style="background:#DCFCE7;border-radius:10px;padding:14px">
+        <div style="font-size:13px;font-weight:700;color:#14532D;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em">Week 2+</div>
+        <div style="font-size:14px;color:#166534;line-height:1.6">Body settles at the new dose. Most people feel stable again. This is the green light to plan the next small drop.</div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- STATS -->
-<section class="stats">
-  <div class="stats-grid">
-    <div class="stat">
-      <span class="stat-num">73M+</span>
-      <span class="stat-label">Gabapentin prescriptions written annually across North America</span>
+  <div class="card">
+    <div class="card-eyebrow">Track your current dose</div>
+    <div class="accent-purple">
+      <div class="card-title">Where I am today</div>
     </div>
-    <div class="stat">
-      <span class="stat-num">80%</span>
-      <span class="stat-label">Our reduction goal — not zero, just significantly less fog, less dependency, more life</span>
+    <div class="grid2" style="margin-bottom:14px">
+      <div><div class="field-label">Current total daily dose (mg)</div><input type="number" id="current-dose" placeholder="e.g. 2700" oninput="saveTaper()"></div>
+      <div><div class="field-label">Date of last reduction</div><input type="date" id="last-drop" oninput="saveTaper()"></div>
     </div>
-    <div class="stat">
-      <span class="stat-num">Varies</span>
-      <span class="stat-label">Timeline varies by dose, duration, and how your body responds. Some reduce faster. Some need up to 18 months. Your pace is the right pace.</span>
-    </div>
+    <div class="field-label">Next planned drop — date and amount</div>
+    <input type="text" id="next-drop" placeholder="e.g. July 15 — drop to 2600mg" oninput="saveTaper()" style="margin-bottom:14px">
+    <div class="field-label">Notes on how the last drop felt</div>
+    <textarea id="taper-notes" placeholder="e.g. day 3 was rough, sleep disrupted, but settled by day 8. Ready to drop again..." style="min-height:100px" oninput="saveTaper()"></textarea>
+    <div class="saved-msg" id="taper-msg"></div>
   </div>
-</section>
-
-
-<!-- WHAT IS THE JOURNAL -->
-<section style="background:var(--navy2);padding:5rem 2.5rem;border-top:1px solid var(--border-dark);border-bottom:1px solid var(--border-dark)">
-  <div class="wrap">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center">
-      <div>
-        <div class="eyebrow eyebrow-light"><i class="ti ti-notebook"></i> What you receive</div>
-        <h2 style="font-size:clamp(26px,3.5vw,38px);color:#F8FAFC;margin-bottom:1.25rem;line-height:1.15">A personalized digital journal — private, interactive, ready on day one</h2>
-        <p style="color:#CBD5E1;line-height:1.85;margin-bottom:1.25rem;font-size:16px">Your GabaDown journal is a custom digital document built from your intake. It's not an app, not a subscription to manage, not a generic template. It's yours — organized into tabs, accessible on any device, and built around your specific starting dose and situation.</p>
-        <div style="display:flex;flex-direction:column;gap:10px">
-          <div style="display:flex;gap:12px;align-items:center"><i class="ti ti-device-mobile" style="color:var(--teal2);font-size:20px;flex-shrink:0"></i><span style="font-size:15px;color:#CBD5E1">Works on your phone, tablet, or computer — open it anywhere</span></div>
-          <div style="display:flex;gap:12px;align-items:center"><i class="ti ti-layout-columns" style="color:var(--teal2);font-size:20px;flex-shrink:0"></i><span style="font-size:15px;color:#CBD5E1">Organized into clear tabs — taper plan, daily log, vision, supplements, and more</span></div>
-          <div style="display:flex;gap:12px;align-items:center"><i class="ti ti-eye-off" style="color:var(--teal2);font-size:20px;flex-shrink:0"></i><span style="font-size:15px;color:#CBD5E1">Completely private — delivered via secure link, visible only to you</span></div>
-          <div style="display:flex;gap:12px;align-items:center"><i class="ti ti-pencil" style="color:var(--teal2);font-size:20px;flex-shrink:0"></i><span style="font-size:15px;color:#CBD5E1">Interactive — tap to log your daily data, check off milestones, update your vision</span></div>
-          <div style="display:flex;gap:12px;align-items:center"><i class="ti ti-refresh" style="color:var(--teal2);font-size:20px;flex-shrink:0"></i><span style="font-size:15px;color:#CBD5E1">Updated with you as your taper progresses — this is a living document, not a static PDF</span></div>
-        </div>
-      </div>
-      <!-- Journal mockup -->
-      <div style="background:#FFFFFF;border-radius:20px;border:1px solid #E2E8F0;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.15)">
-        <!-- Browser bar -->
-        <div style="background:#F1F5F9;padding:0.75rem 1rem;display:flex;align-items:center;gap:8px;border-bottom:1px solid #E2E8F0">
-          <div style="display:flex;gap:5px"><div style="width:10px;height:10px;border-radius:50%;background:#FF5F57"></div><div style="width:10px;height:10px;border-radius:50%;background:#FEBC2E"></div><div style="width:10px;height:10px;border-radius:50%;background:#28C840"></div></div>
-          <div style="flex:1;background:#FFFFFF;border-radius:4px;padding:4px 10px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#6B7280;text-align:center;border:1px solid #E2E8F0">GabaDown Journal · Private</div>
-        </div>
-        <!-- Tab bar -->
-        <div style="display:flex;gap:0;border-bottom:1px solid #E2E8F0;overflow-x:auto;background:#F8FAFC">
-          <div style="padding:0.6rem 1rem;font-size:11px;font-weight:600;color:#0D9488;border-bottom:2px solid #0D9488;white-space:nowrap;font-family:'DM Sans',sans-serif;background:#FFFFFF">Taper Plan</div>
-          <div style="padding:0.6rem 1rem;font-size:11px;color:#9CA3AF;white-space:nowrap;font-family:'DM Sans',sans-serif">Daily Log</div>
-          <div style="padding:0.6rem 1rem;font-size:11px;color:#9CA3AF;white-space:nowrap;font-family:'DM Sans',sans-serif">Vision</div>
-          <div style="padding:0.6rem 1rem;font-size:11px;color:#9CA3AF;white-space:nowrap;font-family:'DM Sans',sans-serif">Supplements</div>
-          <div style="padding:0.6rem 1rem;font-size:11px;color:#9CA3AF;white-space:nowrap;font-family:'DM Sans',sans-serif">Milestones</div>
-          <div style="padding:0.6rem 1rem;font-size:11px;color:#9CA3AF;white-space:nowrap;font-family:'DM Sans',sans-serif">Advocacy</div>
-        </div>
-        <!-- Content area -->
-        <div style="padding:1.5rem;background:#FFFFFF">
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#0D9488;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem">Phase 1 · Weeks 1–6 · Starting dose 2,700mg</div>
-          <!-- Taper rows -->
-          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:1.25rem">
-            <div style="display:flex;justify-content:space-between;align-items:center;background:#F0FDF4;border-radius:8px;padding:0.6rem 0.9rem;border:1px solid #BBF7D0">
-              <span style="font-size:12px;color:#0F172A;font-family:'DM Sans',sans-serif;font-weight:500">Week 1–2 · Hold</span>
-              <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#0D9488;font-weight:600">2,700mg</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;background:#F8FAFC;border-radius:8px;padding:0.6rem 0.9rem;border:1px solid #E2E8F0">
-              <span style="font-size:12px;color:#374151;font-family:'DM Sans',sans-serif">Week 3–4 · First reduction</span>
-              <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6B7280">2,600mg</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;background:#F8FAFC;border-radius:8px;padding:0.6rem 0.9rem;border:1px solid #E2E8F0">
-              <span style="font-size:12px;color:#9CA3AF;font-family:'DM Sans',sans-serif">Week 5–6 · Assess &amp; hold</span>
-              <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#9CA3AF">2,600mg</span>
-            </div>
-          </div>
-          <!-- Daily log row -->
-          <div style="border-top:1px solid #E2E8F0;padding-top:1rem">
-            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9CA3AF;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.6rem">Today's log</div>
-            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
-              <div style="background:#F8FAFC;border-radius:6px;padding:0.5rem;text-align:center;border:1px solid #E2E8F0"><div style="font-size:10px;color:#9CA3AF;margin-bottom:3px">Pain</div><div style="font-size:14px;font-weight:700;color:#374151">6/10</div></div>
-              <div style="background:#F8FAFC;border-radius:6px;padding:0.5rem;text-align:center;border:1px solid #E2E8F0"><div style="font-size:10px;color:#9CA3AF;margin-bottom:3px">Sleep</div><div style="font-size:14px;font-weight:700;color:#374151">5h</div></div>
-              <div style="background:#F0FDF4;border-radius:6px;padding:0.5rem;text-align:center;border:1px solid #BBF7D0"><div style="font-size:10px;color:#9CA3AF;margin-bottom:3px">Mood</div><div style="font-size:14px;font-weight:700;color:#0D9488">OK</div></div>
-              <div style="background:#F8FAFC;border-radius:6px;padding:0.5rem;text-align:center;border:1px solid #E2E8F0"><div style="font-size:10px;color:#9CA3AF;margin-bottom:3px">Energy</div><div style="font-size:14px;font-weight:700;color:#374151">4/10</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURES — BENTO GRID -->
-<section class="features">
-  <div class="wrap">
-    <div class="eyebrow"><i class="ti ti-package"></i> What's included</div>
-    <h2 class="section-title">Everything built for you specifically.</h2>
-    <p class="section-sub">Nothing generic. Every journal is built from your intake — your dose, your history, your doctor's direction, your goals.</p>
-    <div class="bento">
-      <!-- Row 1: Two halves -->
-      <div class="bento-card bento-3 bento-teal">
-        <span class="card-badge badge-teal">What you get — every journal</span>
-        <div class="card-icon"><i class="ti ti-map-2"></i></div>
-        <div class="card-title">Draft taper framework</div>
-        <div class="card-desc">Your phase-by-phase reduction schedule built from your exact starting dose, using published deprescribing guidelines (Maudsley 2024, Horowitz &amp; Taylor). The plan your doctor didn't have time to build in a 15-minute appointment — but can review and approve in two.</div>
-      </div>
-      <div class="bento-card bento-3 bento-teal">
-        <span class="card-badge badge-gold">Share with your doctor</span>
-        <div class="card-icon"><i class="ti ti-file-description"></i></div>
-        <div class="card-title">Healthcare team summary</div>
-        <div class="card-desc">A clean one-page document formatted for your doctor and pharmacist. Shows your draft taper framework, what you're tracking, and what you're monitoring — something they can review, adjust, and formally approve at your next appointment. This is what closes the loop.</div>
-      </div>
-      <!-- Row 2: Three thirds -->
-      <div class="bento-card bento-2">
-        <div class="card-icon"><i class="ti ti-eye"></i></div>
-        <div class="card-title">Vision section</div>
-        <div class="card-desc">Your personal why — sensory-rich, specific to your life. Your anchor when it gets hard.</div>
-      </div>
-      <div class="bento-card bento-2">
-        <div class="card-icon"><i class="ti ti-trophy"></i></div>
-        <div class="card-title">Milestone rewards</div>
-        <div class="card-desc">12 personalised rewards unlocked at each reduction milestone — celebration built into the protocol.</div>
-      </div>
-      <div class="bento-card bento-2">
-        <div class="card-icon"><i class="ti ti-clipboard-list"></i></div>
-        <div class="card-title">Daily tracking log</div>
-        <div class="card-desc">Pain, sleep, mood, energy, dose — a dataset you bring to every appointment. Real data, not memory.</div>
-      </div>
-      <!-- Row 3: Three thirds -->
-      <div class="bento-card bento-2">
-        <div class="card-icon"><i class="ti ti-activity"></i></div>
-        <div class="card-title">Nerve health support</div>
-        <div class="card-desc">Evidence-informed practices to support nervous system regulation during your taper — adapted to your mobility, symptoms, and current condition.</div>
-      </div>
-      <div class="bento-card bento-2">
-        <div class="card-icon"><i class="ti ti-sun"></i></div>
-        <div class="card-title">Morning routine</div>
-        <div class="card-desc">A custom daily structure built around your life — because how you start the day matters when your nervous system is recalibrating.</div>
-      </div>
-      <div class="bento-card bento-2">
-        <div class="card-icon"><i class="ti ti-book"></i></div>
-        <div class="card-title">Patient advocacy guide</div>
-        <div class="card-desc">How to talk to your doctor and pharmacist effectively. What to ask, how to ask it, how to build a care team that actually supports your goal.</div>
-      </div>
-      <!-- Row 4: Full width AI -->
-      <div class="bento-card bento-6 bento-dark">
-        <div style="display:grid;grid-template-columns:auto 1fr;gap:2rem;align-items:center">
-          <div class="card-icon" style="width:64px;height:64px"><i class="ti ti-robot" style="font-size:28px"></i></div>
-          <div>
-            <div class="card-title" style="font-size:18px;margin-bottom:8px">AI Plan Assistant — included for every client</div>
-            <div class="card-desc" style="font-size:15px">A custom AI trained on your specific journal — answers questions about your plan, your milestones, and what to expect at each stage. Available anytime. Designed to support you and your care team, not replace either of them. Cannot recognize medical emergencies — always contact your doctor or emergency services for urgent concerns.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SUPPLEMENT INFORMATION -->
-<section class="supps">
-  <div class="wrap">
-    <div class="eyebrow"><i class="ti ti-leaf"></i> Supplement information</div>
-    <h2 class="section-title">Natural support — what the research shows</h2>
-    <div class="supps-split">
-      <div class="supps-copy">
-        <p>Your journal includes research-backed information on supplements that many people find supportive during a gabapentin reduction. We cover the evidence behind each category, what the research actually shows, and the questions worth asking your pharmacist before starting anything new.</p>
-        <p>This is educational information — not a prescription or a protocol. Your pharmacist is the right person to confirm timing, dosing, and any interactions with your specific medications. The healthcare team summary we give you makes that conversation straightforward.</p>
-        <div class="supp-disclaimer">
-          <i class="ti ti-alert-circle"></i>
-          <span>All supplement information in your journal is for educational purposes only. Always confirm with your pharmacist before starting any new supplement — especially alongside a prescription medication.</span>
-        </div>
-      </div>
-      <div>
-        <div class="supp-cats">
-          <div class="supp-cat">
-            <div style="width:36px;height:36px;background:rgba(124,58,237,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px"><i class="ti ti-brain" style="color:#7C3AED;font-size:18px"></i></div>
-            <div class="supp-cat-name">Nerve repair support</div>
-            <div class="supp-cat-desc">Supplements with evidence for supporting nerve health and the repair process during reduction</div>
-          </div>
-          <div class="supp-cat">
-            <div style="width:36px;height:36px;background:rgba(13,148,136,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px"><i class="ti ti-activity" style="color:var(--teal);font-size:18px"></i></div>
-            <div class="supp-cat-name">GABA pathway support</div>
-            <div class="supp-cat-desc">Supplements that work on similar pathways to ease the transition as doses come down</div>
-          </div>
-          <div class="supp-cat">
-            <div style="width:36px;height:36px;background:rgba(37,99,235,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px"><i class="ti ti-moon" style="color:#2563EB;font-size:18px"></i></div>
-            <div class="supp-cat-name">Sleep &amp; anxiety support</div>
-            <div class="supp-cat-desc">Supplements to support sleep quality and reduce withdrawal-related anxiety</div>
-          </div>
-          <div class="supp-cat">
-            <div style="width:36px;height:36px;background:rgba(220,38,38,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px"><i class="ti ti-flame" style="color:#DC2626;font-size:18px"></i></div>
-            <div class="supp-cat-name">Anti-inflammatory support</div>
-            <div class="supp-cat-desc">Supplements targeting the inflammatory component of chronic nerve pain</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+</div>
 
 <!-- SUCCESS STORIES -->
-<section class="stories">
-  <div class="wrap">
-    <div class="eyebrow eyebrow-light"><i class="ti ti-star"></i> What we found in our research</div>
-    <h2 class="section-title" style="color:#F8FAFC">Patient experiences, found in public forums</h2>
-    <p class="section-sub" style="color:#94A3B8">These are publicly shared accounts, linked to their original sources so you can read them in full context.</p>
-    <div class="stories-grid">
-      <div class="story-card">
-        <div class="story-source"><i class="ti ti-message-circle"></i> Mayo Clinic Connect Forum</div>
-        <div class="story-tags"><span class="story-tag tag-blue">3 years on gabapentin</span><span class="story-tag tag-green">Made it off</span></div>
-        <div class="story-quote">Reported no real difficulty tapering off after 3 years on the medication — just a few days of minor symptoms.</div>
-        <div class="story-detail">Tapered with psychiatrist support for hip pain and anxiety. Slow taper, medical supervision throughout. Described it as unremarkable.</div>
-        <a href="https://connect.mayoclinic.org/discussion/tapering-off-gabapentin/" target="_blank" rel="noopener" class="story-link">Read the full thread <i class="ti ti-arrow-right"></i></a>
-      </div>
-      <div class="story-card">
-        <div class="story-source"><i class="ti ti-message-circle"></i> Reddit r/ChronicPain</div>
-        <div class="story-tags"><span class="story-tag tag-blue">2,700mg — same starting dose</span><span class="story-tag tag-green">Tapered successfully</span></div>
-        <div class="story-quote">Tapered very slowly over months, eventually cutting tablets into sixteenths — slow and steady wins the race.</div>
-        <div class="story-detail">Started at exactly 2,700mg. That level of precision is not weakness — it's exactly how a safe taper is done. And they got there.</div>
-        <a href="https://www.reddit.com/r/ChronicPain/comments/1cwgm1e/i_outlasted_gabapentin_withdrawal/" target="_blank" rel="noopener" class="story-link">Read the full thread <i class="ti ti-arrow-right"></i></a>
-      </div>
-      <div class="story-card">
-        <div class="story-source"><i class="ti ti-message-circle"></i> Mad In America</div>
-        <div class="story-tags"><span class="story-tag tag-blue">7-year taper journey</span><span class="story-tag tag-green">Finally finished</span></div>
-        <div class="story-quote">Finished a seven-year taper, and found it validating just to learn they weren't the only one for whom it took this long.</div>
-        <div class="story-detail">Seven years. The longest road. But they finished. They wrote this to help others feel less alone. Your timeline will be shorter with structured support.</div>
-        <a href="https://www.madinamerica.com/2023/05/gabapentin-withdrawal-one-year-later/" target="_blank" rel="noopener" class="story-link">Read the full story <i class="ti ti-arrow-right"></i></a>
-      </div>
-      <div class="story-card">
-        <div class="story-source"><i class="ti ti-message-circle"></i> Pain Concern Forum (UK)</div>
-        <div class="story-tags"><span class="story-tag tag-teal">Neuropathic pain</span><span class="story-tag tag-green">Off with GP support</span></div>
-        <div class="story-quote">Found the process genuinely hard, but worth it — and credits going slow with their doctor fully informed.</div>
-        <div class="story-detail">100mg reductions with GP guidance. Genuinely difficult. And yet on the other side they feel so much better and call it worth it.</div>
-        <a href="https://healthunlocked.com/painconcern/posts/133870000/coming-of-gabapentin." target="_blank" rel="noopener" class="story-link">Read the full thread <i class="ti ti-arrow-right"></i></a>
-      </div>
-    </div>
-    <div class="stories-note">
-      <p><strong style="color:#94A3B8">A note on these accounts:</strong> Success stories are underrepresented online because people who get through it tend to move on with their lives rather than posting about it. The real success rate of a slow, supervised taper is much higher than online forums suggest. If you are quoted here and would like it removed, email <a href="mailto:hello@gabadown.com" style="color:var(--teal2)">hello@gabadown.com</a> and it comes down right away.</p>
+<div id="pg-stories" class="page">
+
+  <div class="hard-days-box">
+    <div class="hd-title">For the hard days — read this first</div>
+    <div class="hd-item"><strong>Remember this</strong>Every single person in these stories had days where they wanted to stop. Every one. They kept going anyway — and they made it.</div>
+    <div class="hd-item"><strong>What they all had in common</strong>They tapered slower than their doctor suggested. They went back up when they needed to. They didn't see that as failure. And they arrived.</div>
+    <div class="hd-item"><strong>You are not alone in this</strong>Thousands of people have walked this exact road. These are some of their real words.</div>
+    <div style="margin-top:1.25rem;background:#0F2A1A;border:1px solid #276749;border-radius:12px;padding:18px 22px">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#276749;margin-bottom:10px">From a real person on Reddit — on 2700mg for a year</div>
+      <div style="font-size:18px;font-style:italic;color:#9AE6B4;line-height:1.7;margin-bottom:10px">"Slow and steady wins the race. I cut 600mg tablets into eighths, and then sixteenths. Let your body guide you on this. Always slow and steady is my advice. It's not a race."</div>
+      <div style="font-size:13px;color:#276749">— haironburr, r/ChronicPain</div>
     </div>
   </div>
-</section>
 
-<!-- WHO IT'S FOR -->
-<section class="who">
-  <div class="wrap">
-    <div class="eyebrow"><i class="ti ti-user-check"></i> Who this is for</div>
-    <h2 class="section-title">GabaDown is built for a specific person</h2>
-    <div class="who-split">
-      <div>
-        <p class="who-intro">This is not a generic wellness journal. It is a structured, medically-informed reduction protocol for long-term, high-dose gabapentin users who are serious about reducing — with their healthcare team's support. You don't need a taper plan from your doctor before you start — that's what GabaDown produces for you to bring to your next appointment.</p>
-        <ul class="criteria-list">
-          <li><i class="ti ti-check"></i>You have been on gabapentin for at least 1 year</li>
-          <li><i class="ti ti-check"></i>Your doctor is aware of and open to the idea of reduction</li>
-          <li><i class="ti ti-check"></i>Your pharmacist is part of your care</li>
-          <li><i class="ti ti-check"></i>You are open to natural supplement information as part of your support</li>
-          <li><i class="ti ti-check"></i>You understand this takes 12 to 18 months — not weeks</li>
-          <li><i class="ti ti-check"></i>You are ready to treat this like the serious protocol it is</li>
-        </ul>
+  <div class="story-card">
+    <div class="story-source">Mayo Clinic Connect Forum</div>
+    <span class="story-tag tag-long">3 years on gabapentin</span>
+    <span class="story-tag tag-won">Made it off</span>
+    <div class="story-quote">"I had no difficulties going off of Gabapentin. I was on 400mg three times a day for about 3 years. I only experienced sweaty palms for a couple of days."</div>
+    <div class="story-detail">A patient who had been on gabapentin for hip pain and anxiety for 3 years, on a dose-per-dose similar total to a lower starting point than yours. Tapered with their psychiatrist's support and came out the other side describing it as unremarkable. Key: they went slowly and had medical support throughout.</div>
+    <a class="story-link" href="https://connect.mayoclinic.org/discussion/tapering-off-gabapentin/" target="_blank">Read the full forum thread →</a>
+  </div>
+
+  <div class="story-card">
+    <div class="story-source">Mayo Clinic Connect Forum</div>
+    <span class="story-tag tag-nerve">Post-herpetic neuralgia</span>
+    <span class="story-tag tag-won">Tapered without incident</span>
+    <div class="story-quote">"I took gabapentin for post herpetic neuralgia and don't recall tapering off being much of an event for me. My doctor gave me a tapering schedule, and I believe I followed it without incident."</div>
+    <div class="story-detail">Another member of the same Mayo forum thread. Nerve pain from shingles — similar nerve pathway involvement to back and foot pain. The doctor provided a schedule and it went smoothly. This person's experience is on the easier end, but it represents what a well-managed slow taper can look like.</div>
+    <a class="story-link" href="https://connect.mayoclinic.org/discussion/tapering-off-gabapentin/" target="_blank">Read the full forum thread →</a>
+  </div>
+
+  <div class="story-card">
+    <div class="story-source">Mad In America — Personal Story</div>
+    <span class="story-tag tag-long">7 years getting off</span>
+    <span class="story-tag tag-won">Finally finished</span>
+    <div class="story-quote">"I am finally finishing my tapering journey after 7 years working to get off this drug and I can honestly say that when I first started my journey there was NOTHING available on the internet as a means for support or guidance and to come here and realize I am not alone in this experience is so validating."</div>
+    <div class="story-detail">This person's taper took 7 years — longer than most. But they finished. They wrote this to help others feel less alone. Your timeline will likely be much shorter with the tools, supplements, and support you have now. This story matters because it shows that even the longest roads end.</div>
+    <a class="story-link" href="https://www.madinamerica.com/2023/05/gabapentin-withdrawal-one-year-later/" target="_blank">Read the full story →</a>
+  </div>
+
+  <div class="story-card">
+    <div class="story-source">Mad In America — Comments Section</div>
+    <span class="story-tag tag-long">Long-term user</span>
+    <span class="story-tag tag-won">80% better after 4 years off</span>
+    <div class="story-quote">"It has been a journey for sure, but 80% better for sure!"</div>
+    <div class="story-detail">This commenter had a very hard road after stopping — significant physical symptoms their doctors wouldn't attribute to gabapentin. But 4 years later, they reported being 80% better and continuing to improve. This matters: even difficult withdrawals do resolve. The body heals. And 80% better is a remarkable life.</div>
+    <a class="story-link" href="https://www.madinamerica.com/2023/05/gabapentin-withdrawal-one-year-later/" target="_blank">Read the full story →</a>
+  </div>
+
+  <div class="story-card">
+    <div class="story-source">Pain Concern Forum (UK)</div>
+    <span class="story-tag tag-nerve">Neuropathic pain</span>
+    <span class="story-tag tag-won">Off with GP support</span>
+    <div class="story-quote">"Having gone through the process I feel so much better without all the awful side effects it caused and so it was worth it... I was naive and didn't realise I would experience such withdrawal symptoms but knowing what I know now — worth every step."</div>
+    <div class="story-detail">This person was on gabapentin for 5 months (a shorter course than many), but the withdrawal was still very difficult — they describe it as painful. And yet: on the other side they feel so much better and call it worth it. They used 100mg reductions with GP guidance and came through. Her message to others: make sure your doctor is aware of what you're doing, go slowly, and it can be done.</div>
+    <a class="story-link" href="https://healthunlocked.com/painconcern/posts/133870000/coming-of-gabapentin." target="_blank">Read the full forum thread →</a>
+  </div>
+
+  <div class="story-card">
+    <div class="story-source">Fibromyalgia Action UK Forum</div>
+    <span class="story-tag tag-long">On 1800mg/day</span>
+    <span class="story-tag tag-won">Tapered off during COVID</span>
+    <div class="story-quote">"During COVID I slowly titrated off of them to no ill effect."</div>
+    <div class="story-detail">Brief but significant. This person was on 1800mg/day — two thirds of I's dose — and tapered off without notable problems. No details given on timeline but they described it as having no ill effect. A quieter success story but a real one: high-dose, long-term use, successful taper.</div>
+    <a class="story-link" href="https://healthunlocked.com/fibromyalgia-action-uk/posts/151511771/gabapentin-for-fibromyalgia-ibs-and-nerve-pain" target="_blank">Read the full forum thread →</a>
+  </div>
+
+
+  <div class="story-card" style="background:#1a0a2e;border-color:#534AB7">
+    <div class="story-source" style="color:#9F7AEA">Reddit r/ChronicPain — haironburr</div>
+    <span class="story-tag" style="background:#2D1B69;color:#D6BCFA">2700mg — same starting dose</span>
+    <span class="story-tag tag-won">Tapered successfully</span>
+    <div class="story-quote" style="border-left-color:#9F7AEA;color:#F0E6FF">"Let's not lionize balls to the wall taper on any medicine. I was on 2700mg Gabapentin for a year. And when I finally got my doc to hear it wasn't working, I very slowly reduced my dosage over a period of months. Slow and steady wins the race. I cut 600mg tablets into eighths, and then sixteenths."</div>
+    <div class="story-detail" style="color:#9F7AEA">This person started at exactly the same dose — 2700mg. They tapered so slowly they were cutting tablets into sixteenths. That is not weakness. That is precision. That is exactly how this is done. And they got there.</div>
+  </div>
+  <div class="card" style="margin-top:0.5rem">
+    <div class="card-eyebrow">A note on these stories</div>
+    <div class="card-sub" style="margin-bottom:0">Success stories are underrepresented online because people who get better tend to move on with their lives rather than posting about it. The people still posting are often still struggling. This is a survivorship bias worth knowing about — the real success rate of a slow supervised taper is much higher than what online forums suggest. You are doing this the right way.</div>
+  </div>
+</div>
+
+<!-- MORNING -->
+<div id="pg-morning" class="page">
+  <div class="morning-commitment">
+    <div class="mc-title">My morning commitment</div>
+    <div class="mc-time">7:15 AM</div>
+    <div class="mc-sub">Phone goes in the cabinet the night before. Getting out of bed to get it IS the first win of the day.</div>
+    <div class="mc-steps">
+      <div class="mc-step"><div class="step-num">1</div><div class="step-text">Phone in the cabinet before bed — not beside you. Walking to get it wakes your body up.</div></div>
+      <div class="mc-step"><div class="step-num">2</div><div class="step-text">Feet on the floor. Take one slow breath before you stand.</div></div>
+      <div class="mc-step"><div class="step-num">3</div><div class="step-text">Morning supplements with a full glass of water — this is part of the healing, not a chore.</div></div>
+      <div class="mc-step"><div class="step-num">4</div><div class="step-text">5 minutes outside or by a window — light in your eyes signals your brain the day has begun.</div></div>
+      <div class="mc-step"><div class="step-num">5</div><div class="step-text">Open this journal. Read your vision. Remember why.</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-eyebrow">My commitment</div>
+    <div class="accent-purple">
+      <div class="card-title">Why I will get up at 7:15 every day</div>
+      <div class="card-sub">This isn't about discipline. It's about what getting up means — what version of yourself walks through the day when you start it on purpose.</div>
+    </div>
+    <div class="prompts">
+      <p>When I get up at 7:15, the first hour of my day feels like...</p>
+      <p>The version of me who sleeps until 10 feels... versus the one who gets up at 7:15</p>
+      <p>What am I protecting by getting up early?</p>
+      <p>What will I do in that first quiet hour that matters to me?</p>
+    </div>
+    <textarea id="morning-why" placeholder="Write your real reason. Not 'because I should' — but what getting up at 7:15 actually gives you..." style="min-height:160px" oninput="soulSave()"></textarea>
+  </div>
+  <div class="card">
+    <div class="card-eyebrow">The cabinet rule</div>
+    <div class="accent-green">
+      <div class="card-title">Why it works</div>
+      <div class="card-sub">Putting your phone in a cabinet removes the choice from the morning. Your body has to move to get it. That movement IS the wake-up. The last thing you see at night is also not a screen.</div>
+    </div>
+    <div class="grid2">
+      <div style="background:#F0FDF4;border-radius:10px;padding:14px 16px">
+        <div style="font-size:13px;font-weight:700;color:#14532D;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em">Night before</div>
+        <div style="font-size:14px;color:#166534;line-height:1.6">Phone into cabinet<br>Set morning alarm only<br>Lay out supplements<br>Fill water glass</div>
       </div>
-      <div>
-        <div class="not-for">
-          <div class="not-for-title"><i class="ti ti-info-circle"></i> This is not the right fit if...</div>
-          <ul class="not-for-list">
-            <li>You want to stop gabapentin completely and immediately</li>
-            <li>Your doctor does not know about your reduction plan</li>
-            <li>You are not open to a 12–18 month timeline</li>
-            <li>You are looking for a quick fix or a shortcut</li>
-            <li>You are not willing to engage with your pharmacist on supplement choices</li>
-          </ul>
-        </div>
+      <div style="background:#EDE9FE;border-radius:10px;padding:14px 16px">
+        <div style="font-size:13px;font-weight:700;color:#4C1D95;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em">7:15 AM</div>
+        <div style="font-size:14px;color:#5B21B6;line-height:1.6">Walk to cabinet<br>Take supplements<br>Read your vision<br>Begin your day</div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ADD-ON SERVICES -->
-<section class="addons">
-  <div class="wrap">
-    <div class="eyebrow"><i class="ti ti-plus"></i> Add-on services</div>
-    <h2 class="section-title">Deepen your support</h2>
-    <p class="section-sub">Each GabaDown journal stands alone — these add-ons are available for clients who want more direct support at key moments.</p>
-    <div class="addon-grid">
-      <div class="addon-card">
-        <div class="addon-price">$197</div>
-        <div class="addon-name">Advocacy Coaching Call</div>
-        <div class="addon-desc">60 minutes to prepare for your next doctor appointment. What to ask, how to advocate for the taper plan, and how to handle pushback — leaving with a clear conversation strategy.</div>
-        <a href="https://buy.stripe.com/28EdR8gzdd2Z9r2h1483C00" class="addon-cta">Book the call <i class="ti ti-arrow-right"></i></a>
+<!-- SUPPLEMENTS -->
+<div id="pg-supps" class="page">
+  <div class="card">
+    <div class="card-eyebrow">Daily timing schedule</div>
+    <div class="accent-purple">
+      <div class="card-title">When to take what</div>
+      <div class="card-sub">Important: take magnesium at least 2–3 hours away from gabapentin — it reduces gabapentin absorption if taken together.</div>
+    </div>
+    <div class="timing-grid">
+      <div class="timing-block morning">
+        <div class="timing-title">Morning with food</div>
+        <div class="timing-item">Lion's Mane (500–1000mg)</div>
+        <div class="timing-item">Alpha-Lipoic Acid (600mg)</div>
+        <div class="timing-item">B12 methylcobalamin (1000mcg)</div>
+        <div class="timing-item">Turmeric/Curcumin (500mg)</div>
+        <div class="timing-item">CBD oil sublingual (10–20mg)</div>
       </div>
-      <div class="addon-card">
-        <div class="addon-price">$297</div>
-        <div class="addon-name">Appointment Support</div>
-        <div class="addon-desc">Structured preparation for a specific appointment during your taper — including a written summary of your current tracking data and targeted questions. Walk in with something concrete.</div>
-        <a href="https://buy.stripe.com/5kQeVc6YDe739r23ae83C01" class="addon-cta">Add appointment support <i class="ti ti-arrow-right"></i></a>
+      <div class="timing-block midday">
+        <div class="timing-title">Midday / afternoon</div>
+        <div class="timing-item">Ashwagandha (300–600mg)</div>
+        <div class="timing-item">CBD if pain spikes (10mg)</div>
+        <div class="timing-item">Omega-3 fish oil (1–2g) with lunch</div>
       </div>
-      <div class="addon-card">
-        <div class="addon-price" style="font-size:28px">$47<span style="font-size:14px;color:var(--text3)">/mo</span></div>
-        <div class="addon-name">GabaDown Circle</div>
-        <div class="addon-desc">The founding-member community for people actively reducing gabapentin. Real conversations, real timelines, real support from people going through exactly this. Founding rate locks in before the price rises.</div>
-        <a href="https://buy.stripe.com/eVq4gygzdgfbav67qu83C02" class="addon-cta">Join the Circle <i class="ti ti-arrow-right"></i></a>
+      <div class="timing-block evening">
+        <div class="timing-title">Evening (2h after gaba)</div>
+        <div class="timing-item">Reishi (500–1000mg)</div>
+        <div class="timing-item">Magnesium glycinate (300–400mg)</div>
+        <div class="timing-item">L-Theanine (200mg)</div>
+        <div class="timing-item">CBD oil sublingual (20–30mg)</div>
+        <div class="timing-item">Valerian root if needed for sleep</div>
       </div>
     </div>
   </div>
-</section>
-
-<!-- KIT FORM -->
-<section class="kit-section">
-  <div class="kit-inner">
-    <div class="eyebrow eyebrow-light" style="justify-content:center;margin-bottom:0.75rem"><i class="ti ti-file-text"></i> Free resource</div>
-    <h2>Not ready to commit yet?<br>Start here.</h2>
-    <p>Seven questions that help you and your doctor have a real conversation about gabapentin reduction. Free. One page. Takes 2 minutes to read.</p>
-    <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
-    <form action="https://app.kit.com/forms/9598713/subscriptions" class="seva-form formkit-form" method="post" data-sv-form="9598713" data-uid="cef53f7cd5" data-format="inline" data-version="5" min-width="400 500 600 700 800"><div data-style="clean"><ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul><div data-element="fields" data-stacked="false" class="seva-fields formkit-fields"><div class="formkit-field" style="margin-bottom:10px"><input class="formkit-input" name="email_address" aria-label="Email Address" placeholder="Email Address" required="" type="email" style="color:rgb(0,0,0);border-color:rgb(227,227,227);border-radius:8px;font-weight:400;padding:14px 16px;font-size:15px;width:100%"></div><button data-element="submit" class="formkit-submit formkit-submit" style="color:rgb(255,255,255);background-color:rgb(13,148,136);border-radius:8px;font-weight:600;padding:14px 24px;font-size:15px;width:100%;cursor:pointer;border:0"><div class="formkit-spinner"><div></div><div></div><div></div></div><span>Get the 7 questions free</span></button></div><div class="formkit-powered-by-convertkit-container" style="opacity:0.35;margin-top:10px;text-align:center"><a href="https://kit.com/features/forms?utm_campaign=poweredby&utm_content=form&utm_medium=referral&utm_source=dynamic" data-element="powered-by" class="formkit-powered-by-convertkit" data-variant="dark" target="_blank" rel="nofollow noopener">Built with Kit</a></div></div></form>
-  </div>
-</section>
-
-<!-- COMPARISON TABLE -->
-<section class="compare">
-  <div class="wrap">
-    <div class="eyebrow"><i class="ti ti-table"></i> How it compares</div>
-    <h2 class="section-title">GabaDown vs. the alternatives</h2>
-    <p class="section-sub">Most people managing a gabapentin taper are doing it with forum threads and rushed appointments. Here's what changes with a structured system.</p>
-    <table class="compare-table">
-      <thead>
-        <tr>
-          <th>What you need</th>
-          <th class="col-gaba" style="vertical-align:middle">
-            <div style="display:flex;align-items:center;gap:8px">
-              <svg viewBox="0 0 100 100" width="22" height="22" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><circle cx="50" cy="50" r="50" fill="#0D9488"/><circle cx="28" cy="36" r="9.5" fill="white"/><circle cx="50" cy="50" r="7" fill="white"/><circle cx="72" cy="64" r="5" fill="white"/></svg>
-              GabaDown
-            </div>
-          </th>
-          <th>Forums / Reddit</th>
-          <th>15-min appointment</th>
-        </tr>
-      </thead>
+  <div class="card">
+    <div class="card-eyebrow">Full supplement guide</div>
+    <div class="card-title" style="margin-bottom:1rem">What each one does and why</div>
+    <div style="overflow-x:auto">
+    <table class="supp-table">
+      <thead><tr><th style="width:20%">Supplement</th><th style="width:15%">Dose</th><th style="width:12%">Timing</th><th>What it does &amp; why it matters</th></tr></thead>
       <tbody>
-        <tr><td>A structured taper schedule</td><td class="col-gaba yes">✓ Built for you</td><td class="no">✗</td><td class="rare">Rarely</td></tr>
-        <tr><td>Doctor can review &amp; approve the plan</td><td class="col-gaba yes">✓ Healthcare summary included</td><td class="no">✗</td><td class="yes">✓</td></tr>
-        <tr><td>Distinguishes withdrawal from relapse</td><td class="col-gaba yes">✓ Explicitly addressed</td><td class="rare">Mixed</td><td class="rare">Rarely</td></tr>
-        <tr><td>Between-appointment support</td><td class="col-gaba yes">✓ AI Plan Assistant</td><td class="rare">Sort of</td><td class="no">✗</td></tr>
-        <tr><td>Evidence-based supplement information</td><td class="col-gaba yes">✓ Cited research</td><td class="rare">Mixed quality</td><td class="rare">Rarely</td></tr>
-        <tr><td>Daily tracking for appointments</td><td class="col-gaba yes">✓ Built in</td><td class="no">✗</td><td class="no">✗</td></tr>
-        <tr><td>Available across North America</td><td class="col-gaba yes">✓ US &amp; Canada</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td><strong>Lion's Mane</strong></td><td>500–1000mg</td><td><span class="tag tag-m">Morning</span></td><td>Stimulates nerve growth factor (NGF) — the protein that repairs and regrows nerve fibres. Addresses the actual nerve damage rather than masking pain. Effects build over 4–8 weeks. Use dual-extract for full benefit.</td></tr>
+        <tr><td><strong>Alpha-Lipoic Acid (ALA)</strong></td><td>600mg</td><td><span class="tag tag-m">Morning</span></td><td>Strongest evidence-backed supplement for neuropathy. Universal antioxidant protecting nerve cells in both fat and water-soluble tissue. Clinical trials show it reduces burning, numbness, and tingling. Take with food.</td></tr>
+        <tr><td><strong>B12 methylcobalamin</strong></td><td>1000mcg</td><td><span class="tag tag-m">Morning</span></td><td>B12 deficiency directly worsens nerve pain. The methylcobalamin form (not cyanocobalamin) is what the nervous system actually uses. Supports myelin sheath repair — the insulation around nerve fibres.</td></tr>
+        <tr><td><strong>Turmeric / Curcumin</strong></td><td>500mg curcumin</td><td><span class="tag tag-m">Morning</span></td><td>Anti-inflammatory that calms nerve tissue irritation. Take with black pepper extract (piperine) — increases absorption by up to 2000%. Works synergistically with ALA to improve nerve conduction.</td></tr>
+        <tr><td><strong>CBD oil (full spectrum)</strong></td><td>10–30mg per dose</td><td><span class="tag tag-m">Morning</span> <span class="tag tag-e">Evening</span></td><td>Bridges the pain gap as gabapentin comes down. Sublingual holds 60 seconds under tongue for best absorption. Full-spectrum outperforms isolate for nerve pain. Also supports sleep and reduces withdrawal anxiety.</td></tr>
+        <tr><td><strong>Ashwagandha</strong></td><td>300–600mg</td><td><span class="tag tag-n">Midday</span></td><td>A GABA-A receptor activator — directly overlaps with what gabapentin does, helping the nervous system stay calm as doses drop. Lowers cortisol that spikes during withdrawal. Start low to assess tolerance.</td></tr>
+        <tr><td><strong>Omega-3 (fish oil)</strong></td><td>1–2g EPA+DHA</td><td><span class="tag tag-n">Midday</span></td><td>Reduces neuroinflammation and supports nerve cell membrane integrity. EPA has strong evidence for reducing depression and anxiety that often accompanies dose reductions.</td></tr>
+        <tr><td><strong>Reishi mushroom</strong></td><td>500–1000mg</td><td><span class="tag tag-e">Evening</span></td><td>Triterpenes interact with the GABA pathway — promoting calm and sleep through the same system gabapentin affects. Takes 2–4 weeks to build. Take 1–2 hours before bed. Also an adaptogen for stress resilience.</td></tr>
+        <tr><td><strong>Magnesium glycinate</strong></td><td>300–400mg</td><td><span class="tag tag-e">Evening</span></td><td>Space 2–3 hours from ALL gabapentin doses. Supports GABA receptors, eases muscle tension, reduces nerve hypersensitivity, dramatically improves sleep. Glycinate form is gentlest and best absorbed.</td></tr>
+        <tr><td><strong>L-Theanine</strong></td><td>200mg</td><td><span class="tag tag-e">Evening</span></td><td>Promotes calm focused alpha brain waves without sedation. Fast-acting (30–45 min). Reduces anxiety and racing thoughts that spike in the first days after each dose reduction.</td></tr>
+        <tr><td><strong>Valerian root</strong></td><td>300–600mg</td><td><span class="tag tag-e">Bedtime</span></td><td>Increases GABA by inhibiting the enzymes that break it down. Use as needed during the rough patch after each drop — especially nights 2–5 at a new lower dose. Not for daily indefinite use.</td></tr>
       </tbody>
     </table>
+    </div>
   </div>
-</section>
+  <div class="card">
+    <div class="card-eyebrow">Important notes</div>
+    <div class="grid2">
+      <div style="background:#FEF3C7;border-radius:10px;padding:16px;border:1px solid #FDE68A">
+        <div style="font-size:14px;font-weight:700;color:#92400E;margin-bottom:8px">Magnesium timing rule</div>
+        <div style="font-size:14px;color:#78350F;line-height:1.6">Always take magnesium at least 2–3 hours before or after any gabapentin dose. Taking them together reduces how much gabapentin your body absorbs.</div>
+      </div>
+      <div style="background:#FEE2E2;border-radius:10px;padding:16px;border:1px solid #FECACA">
+        <div style="font-size:14px;font-weight:700;color:#991B1B;margin-bottom:8px">Blood pressure watch</div>
+        <div style="font-size:14px;color:#7F1D1D;line-height:1.6">CBD can temporarily affect BP — track it around CBD dose changes. Gabapentin withdrawal can also spike BP. Always tell your doctor what supplements you're taking.</div>
+      </div>
+      <div style="background:#DCFCE7;border-radius:10px;padding:16px;border:1px solid #BBF7D0">
+        <div style="font-size:14px;font-weight:700;color:#14532D;margin-bottom:8px">Start slow</div>
+        <div style="font-size:14px;color:#166534;line-height:1.6">Add one new supplement every 3–5 days so you can identify what helps and what doesn't agree with you.</div>
+      </div>
+      <div style="background:#EDE9FE;border-radius:10px;padding:16px;border:1px solid #C4B5FD">
+        <div style="font-size:14px;font-weight:700;color:#4C1D95;margin-bottom:8px">Give it time</div>
+        <div style="font-size:14px;color:#5B21B6;line-height:1.6">Lion's Mane and Reishi need 4–8 weeks to reach full effect. ALA and CBD work faster. Track in your daily log so you can see what's shifting.</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<!-- OFFER -->
-<section class="offer" id="apply">
-  <div class="offer-inner">
-    <div class="offer-box">
-      <div class="spots-badge"><i class="ti ti-clock" style="font-size:12px"></i> We take 3 new clients per week</div>
-      <span class="offer-price">$497</span>
-      <div class="offer-currency">USD · one time · no subscription</div>
-      <ul class="offer-includes">
-        <li><i class="ti ti-check"></i>Custom intake questionnaire</li>
-        <li><i class="ti ti-check"></i>Draft taper framework (for doctor review)</li>
-        <li><i class="ti ti-check"></i>Healthcare team summary for doctor &amp; pharmacist</li>
-        <li><i class="ti ti-check"></i>Full personalised digital journal</li>
-        <li><i class="ti ti-check"></i>Supplement information guide</li>
-        <li><i class="ti ti-check"></i>Personalised milestone rewards</li>
-        <li><i class="ti ti-check"></i>Patient advocacy guide</li>
-        <li><i class="ti ti-check"></i>Nerve health support practices</li>
-        <li><i class="ti ti-check"></i>Morning routine protocol</li>
-        <li><i class="ti ti-check"></i>AI Plan Assistant access</li>
-        <li><i class="ti ti-check"></i>30-minute follow-up call</li>
-        <li><i class="ti ti-check"></i>Delivered within 7 days</li>
+<!-- EXERCISES -->
+<div id="pg-exercises" class="page">
+  <div class="card">
+    <div class="card-eyebrow">Daily movement protocol</div>
+    <div class="accent-teal">
+      <div class="card-title">Exercises for nerve health &amp; recovery</div>
+      <div class="card-sub">Designed for nerve repair, foot and ankle mobility, hand dexterity, and nervous system regulation. Do what you can — even 5 minutes counts.</div>
+    </div>
+  </div>
+  <div class="ex-grid">
+    <div class="ex-card">
+      <div class="ex-icon">🦶</div>
+      <div class="ex-title">Ankle alphabet</div>
+      <div style="font-size:14px;color:var(--text2);margin-bottom:8px;line-height:1.5">Restores full ankle mobility and stimulates nerve pathways after foot surgery.</div>
+      <ul class="ex-steps">
+        <li>Sit with your foot lifted off the floor</li>
+        <li>Use your big toe as a "pen," trace A–Z in the air</li>
+        <li>Move only your ankle — keep your leg still</li>
+        <li>Do both feet. Start with 1–2 rounds</li>
+        <li>Best done morning and evening</li>
       </ul>
-      <a href="https://buy.stripe.com/aFabJ0aaP5Ax32E26a83C03" class="offer-cta">Get My Custom Journal <i class="ti ti-arrow-right"></i></a>
-      <div class="offer-guarantee">
-        <i class="ti ti-shield-check"></i>
-        <span>30-day revision guarantee</span>
-        <span class="g-divider">·</span>
-        <span>Quality of work, always</span>
-        <span class="g-divider">·</span>
-        <a href="/terms.html">Terms of service</a>
-      </div>
-      <div class="offer-downsell">
-        <span>Prefer to split the payment?</span>
-        <a href="https://buy.stripe.com/8x23cuaaP6EB32E7qu83C04">2 payments of $249 <i class="ti ti-arrow-right" style="font-size:11px"></i></a>
-      </div>
     </div>
-    <div class="offer-right">
-      <h3>What happens after you purchase</h3>
-      <ul class="offer-steps">
-        <li class="offer-step"><div class="step-num">1</div><p>Your intake questionnaire arrives by email within 2 hours of purchase</p></li>
-        <li class="offer-step"><div class="step-num">2</div><p>You complete the questionnaire — <strong>your dose, your history, your goals, and your doctor's current thinking on reduction if you have it</strong></p></li>
-        <li class="offer-step"><div class="step-num">3</div><p>We produce your <strong>draft taper framework</strong> — a structured phase-by-phase reduction schedule based on published deprescribing guidelines</p></li>
-        <li class="offer-step"><div class="step-num">4</div><p>You take the <strong>healthcare team summary</strong> to your doctor — they review, adjust if needed, and approve the plan</p></li>
-        <li class="offer-step"><div class="step-num">5</div><p>We build your <strong>full journal</strong> around the approved plan — everything personalised to your specific situation</p></li>
-        <li class="offer-step"><div class="step-num">6</div><p>Your journal is delivered within 7 days — and we <strong>schedule your 30-minute follow-up call</strong> to walk through it together</p></li>
+    <div class="ex-card">
+      <div class="ex-icon">🦵</div>
+      <div class="ex-title">Nerve flossing</div>
+      <div style="font-size:14px;color:var(--text2);margin-bottom:8px;line-height:1.5">Mobilises the sciatic nerve through its full range, reducing pain and improving nerve signal conduction.</div>
+      <ul class="ex-steps">
+        <li>Sit on edge of chair, back straight</li>
+        <li>Slowly extend one leg — point toes toward ceiling</li>
+        <li>Hold 2 seconds, then lower and point toes down</li>
+        <li>Repeat 10–15 times per leg, slow and controlled</li>
+        <li>Stop if sharp pain — mild stretch is normal</li>
       </ul>
-      <div class="gpt-callout">
-        <div class="gpt-callout-title"><i class="ti ti-robot"></i> AI Plan Assistant included</div>
-        <p>A custom AI trained on your specific journal — answers questions about your plan, your supplements, and what to expect at each stage. Designed to support you and your care team, not replace either of them. Cannot handle emergencies — always contact your doctor or emergency services for urgent concerns.</p>
+    </div>
+    <div class="ex-card">
+      <div class="ex-icon">✋</div>
+      <div class="ex-title">Right hand dexterity</div>
+      <div style="font-size:14px;color:var(--text2);margin-bottom:8px;line-height:1.5">Stimulates nerve pathways in the hand, improving coordination and reducing neuropathic symptoms.</div>
+      <ul class="ex-steps">
+        <li>Thumb to each fingertip in sequence — repeat 10x</li>
+        <li>Spread fingers wide, then gentle fist — 10x</li>
+        <li>Pick up small objects (coins, buttons) one by one</li>
+        <li>Write or trace letters on paper</li>
+        <li>Squeeze a soft stress ball 30 seconds, release</li>
+      </ul>
+    </div>
+    <div class="ex-card" style="background:#1a0a2e;border-color:#534AB7">
+      <div class="ex-icon">🧠</div>
+      <div class="ex-title" style="color:#D6BCFA">Vagus nerve meditation</div>
+      <div style="font-size:14px;color:#9F7AEA;margin-bottom:8px;line-height:1.5">Activating the vagus nerve reduces pain signals, lowers anxiety, and calms withdrawal symptoms. One of the most powerful free tools available.</div>
+      <ul class="ex-steps">
+        <li style="color:#C4B5FD">Sit comfortably or lie down</li>
+        <li style="color:#C4B5FD">Use headphones if you have them</li>
+        <li style="color:#C4B5FD">Let the guided audio do the work</li>
+        <li style="color:#C4B5FD">Even 10 minutes makes a difference</li>
+      </ul>
+      <a class="vagus-link" href="https://youtu.be/srjmofeFC2s?si=zzLJhJnAHVspKe_R" target="_blank">Open vagus nerve meditation →</a>
+    </div>
+  </div>
+  <div class="card" style="margin-top:1.1rem">
+    <div class="card-eyebrow">Exercise log</div>
+    <div class="accent-green">
+      <div class="card-title">How did today's movement feel?</div>
+    </div>
+    <div class="field-label" style="margin-bottom:8px">Today's exercises (tap all done)</div>
+    <div class="pill-row">
+      <button class="pill" data-tog="1">Ankle alphabet</button>
+      <button class="pill" data-tog="1">Nerve flossing</button>
+      <button class="pill" data-tog="1">Hand dexterity</button>
+      <button class="pill" data-tog="1">Vagus meditation</button>
+      <button class="pill" data-tog="1">Walk with walker</button>
+    </div>
+    <div style="margin-top:14px">
+      <div class="field-label">Notes on how your body felt</div>
+      <textarea id="ex-note" placeholder="e.g. ankle felt less stiff today, hand coordination improving, vagus meditation helped with afternoon anxiety..." style="min-height:100px" oninput="soulSave()"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- DAILY LOG -->
+<div id="pg-daily" class="page">
+  <div class="card"><div class="card-eyebrow">Date</div><input type="date" id="edate"></div>
+  <div class="card">
+    <div class="card-eyebrow">Gabapentin today</div>
+    <div class="grid2" style="margin-bottom:14px">
+      <div><div class="field-label">Total dose (mg)</div><input type="number" id="gdose" placeholder="e.g. 2700"></div>
+      <div><div class="field-label">Number of doses</div><input type="number" id="gnum" placeholder="e.g. 3"></div>
+    </div>
+    <div class="field-label">Any changes or notes</div>
+    <input type="text" id="gnote" placeholder="e.g. skipped afternoon dose, felt dizzy after morning">
+  </div>
+  <div class="card">
+    <div class="card-eyebrow">Pain level</div>
+    <div class="field-label" style="margin-bottom:12px">Right now — 0 (none) to 10 (severe)</div>
+    <div class="scale-row" id="pain-s">
+      <button class="sb" data-pick="pain" data-val="0">0</button><button class="sb" data-pick="pain" data-val="1">1</button><button class="sb" data-pick="pain" data-val="2">2</button><button class="sb" data-pick="pain" data-val="3">3</button><button class="sb" data-pick="pain" data-val="4">4</button><button class="sb" data-pick="pain" data-val="5">5</button><button class="sb" data-pick="pain" data-val="6">6</button><button class="sb" data-pick="pain" data-val="7">7</button><button class="sb" data-pick="pain" data-val="8">8</button><button class="sb" data-pick="pain" data-val="9">9</button><button class="sb" data-pick="pain" data-val="10">10</button>
+    </div>
+    <div style="margin-top:14px"><div class="field-label">Where / what type of pain</div><input type="text" id="ploc" placeholder="e.g. burning in feet, aching lower back, nerve shooting down leg"></div>
+  </div>
+  <div class="card">
+    <div class="card-eyebrow">Sleep last night</div>
+    <div class="field-label" style="margin-bottom:12px">Quality — 1 (very poor) to 5 (excellent)</div>
+    <div class="scale-row" id="sleep-s">
+      <button class="sb" data-pick="sleep" data-val="1">1</button><button class="sb" data-pick="sleep" data-val="2">2</button><button class="sb" data-pick="sleep" data-val="3">3</button><button class="sb" data-pick="sleep" data-val="4">4</button><button class="sb" data-pick="sleep" data-val="5">5</button>
+    </div>
+    <div class="grid2" style="margin-top:14px">
+      <div><div class="field-label">Hours slept</div><input type="number" id="shrs" placeholder="e.g. 6"></div>
+      <div><div class="field-label">Times woken up</div><input type="number" id="swakes" placeholder="e.g. 2"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-eyebrow">Mood &amp; energy</div>
+    <div class="grid2">
+      <div>
+        <div class="field-label" style="margin-bottom:12px">Mood — 1 to 5</div>
+        <div class="scale-row" id="mood-s"><button class="sb" data-pick="mood" data-val="1">1</button><button class="sb" data-pick="mood" data-val="2">2</button><button class="sb" data-pick="mood" data-val="3">3</button><button class="sb" data-pick="mood" data-val="4">4</button><button class="sb" data-pick="mood" data-val="5">5</button></div>
       </div>
-      <div style="background:rgba(45,212,191,0.04);border:1px solid rgba(45,212,191,0.12);border-radius:12px;padding:1.25rem 1.5rem;margin-top:1rem">
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal2);margin-bottom:0.75rem">Your journal is a private digital document</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-          <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#94A3B8"><i class="ti ti-device-tablet" style="color:var(--teal2);font-size:15px"></i> Any device</div>
-          <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#94A3B8"><i class="ti ti-lock" style="color:var(--teal2);font-size:15px"></i> Fully private</div>
-          <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#94A3B8"><i class="ti ti-color-swatch" style="color:var(--teal2);font-size:15px"></i> Interactive &amp; tabbed</div>
-          <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#94A3B8"><i class="ti ti-download" style="color:var(--teal2);font-size:15px"></i> No app needed</div>
-        </div>
+      <div>
+        <div class="field-label" style="margin-bottom:12px">Energy — 1 to 5</div>
+        <div class="scale-row" id="energy-s"><button class="sb" data-pick="energy" data-val="1">1</button><button class="sb" data-pick="energy" data-val="2">2</button><button class="sb" data-pick="energy" data-val="3">3</button><button class="sb" data-pick="energy" data-val="4">4</button><button class="sb" data-pick="energy" data-val="5">5</button></div>
       </div>
     </div>
   </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq">
-  <div class="wrap">
-    <div class="eyebrow"><i class="ti ti-help-circle"></i> Common questions</div>
-    <h2 class="section-title">Frequently asked questions</h2>
-    <div class="faq-grid">
-      <div class="faq-item">
-        <div class="faq-q">Does my doctor need to build my taper schedule first?</div>
-        <div class="faq-a">No — and that's the gap GabaDown fills. Based on your intake and published deprescribing guidelines, we produce a structured draft framework for you to bring to your doctor for review. You don't need a detailed plan from them before you start — just their general openness to reduction.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Will my doctor and pharmacist get a copy?</div>
-        <div class="faq-a">Yes. Every client receives a one-page healthcare team summary formatted for their doctor and pharmacist to review. Your doctor reviews the draft plan, adjusts if needed, and gives their approval. Your pharmacist sees the full picture for any supplement conversations.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">What if I need to slow down or pause?</div>
-        <div class="faq-a">Hold guidance is built into every stage of your journal. Slowing down or pausing is part of a safe taper — not a failure. Any changes should always be made with your doctor's knowledge, and your tracking log helps you explain exactly what's been happening.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">How do I know if it's withdrawal or my original pain returning?</div>
-        <div class="faq-a">This is one of the most important questions in any gabapentin taper and your journal addresses it directly. Withdrawal symptoms typically track closely with dose reductions and ease with time. Your tracking log is specifically designed to help you and your doctor distinguish the two. When in doubt, always call your doctor.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Does GabaDown work for pregabalin (Lyrica) too?</div>
-        <div class="faq-a">Not currently. GabaDown is built specifically for gabapentin users. Pregabalin has a different dosing profile and reduction framework — it's a related but distinct medication. We may address pregabalin in future, but every current journal is gabapentin-specific.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">I'm in Canada — can I use GabaDown?</div>
-        <div class="faq-a">Yes. GabaDown is available to anyone reducing gabapentin under medical supervision in the US and Canada. Pricing is in USD. The deprescribing research it's built on is North American and international — nothing is US-specific.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">What if I'm not ready to buy yet?</div>
-        <div class="faq-a">Download the free 7 Questions guide — it helps you have a more effective conversation with your doctor and is a good starting point regardless of whether GabaDown is right for you right now.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">But I need gabapentin for my pain — what happens when I'm off it?</div>
-        <div class="faq-a">This is the most important question to ask before you start. Reducing gabapentin does not erase your underlying condition — and it shouldn't. What it does is help you and your doctor see more clearly what the medication is actually doing versus what your baseline pain actually is. Many people find their pain is more manageable than the medicated fog made it feel. Others work with their doctor to explore alternative pain management as the dose comes down. Either way, the taper creates clarity — and clarity gives you and your doctor better options than staying at a dose that's affecting your quality of life.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Why would I want to reduce? It's managing my pain.</div>
-        <div class="faq-a">For many people it is — and that's exactly why a careful supervised reduction is the right approach, not stopping abruptly. But long-term high-dose gabapentin is associated with significant side effects that worsen over time: cognitive fog, memory problems, emotional blunting, persistent fatigue, weight gain, and a deepening physical dependency. Many people find that as doses come down carefully, they feel more present, more themselves — and discover their baseline pain is lower than they thought. The goal is not to be pain-free. The goal is to be better off at a lower dose than you are at a higher one.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Is there a payment plan?</div>
-        <div class="faq-a">Yes — 2 payments of $249 (total $498). Same journal, same delivery timeline, same everything. Just split the payment for flexibility. Choose the payment plan option at checkout.</div>
-      </div>
+  <div class="card">
+    <div class="card-eyebrow">Supplements &amp; CBD today</div>
+    <div class="field-label" style="margin-bottom:4px">Tap everything taken today</div>
+    <div class="pill-row">
+      <button class="pill" data-tog="1">CBD morning</button><button class="pill" data-tog="1">CBD evening</button><button class="pill" data-tog="1">Lion's Mane</button><button class="pill" data-tog="1">ALA</button><button class="pill" data-tog="1">B12</button><button class="pill" data-tog="1">Turmeric</button><button class="pill" data-tog="1">Ashwagandha</button><button class="pill" data-tog="1">Reishi</button><button class="pill" data-tog="1">Magnesium</button><button class="pill" data-tog="1">L-Theanine</button><button class="pill" data-tog="1">Valerian</button><button class="pill" data-tog="1">Omega-3</button>
+    </div>
+    <div style="margin-top:16px"><div class="field-label">CBD details (dose / type / timing)</div><input type="text" id="cbd" placeholder="e.g. 20mg full-spectrum sublingual 8am, 30mg 9pm"></div>
+  </div>
+  <div class="card">
+    <div class="card-eyebrow">Blood pressure (optional)</div>
+    <div class="grid3">
+      <div><div class="field-label">Systolic</div><input type="number" id="bps" placeholder="e.g. 128"></div>
+      <div><div class="field-label">Diastolic</div><input type="number" id="bpd" placeholder="e.g. 82"></div>
+      <div><div class="field-label">Time taken</div><input type="text" id="bpt" placeholder="e.g. 9am"></div>
     </div>
   </div>
-</section>
-
-<!-- DISCLAIMER -->
-<section class="disclaimer" id="disclaimer">
-  <div class="disclaimer-inner">
-    <div class="disclaimer-title"><i class="ti ti-alert-circle"></i> Medical Disclaimer</div>
-    <p>GabaDown is a patient advocacy and personal support resource. It is not a medical service, and nothing on this website or in any GabaDown journal constitutes medical advice, diagnosis, or treatment. GabaDown is designed to help your doctor help you — not to replace your doctor's role in your care.</p>
-    <p>Gabapentin is a prescription medication. Reducing or discontinuing gabapentin carries real risks including withdrawal symptoms and, in some cases, seizures. You must never reduce or stop gabapentin without the knowledge and supervision of your prescribing physician and pharmacist. GabaDown requires that all clients have a doctor who is aware of and supportive of their reduction plan before beginning.</p>
-    <p>The draft taper frameworks produced by GabaDown are based on publicly available research and published deprescribing guidelines, including Horowitz &amp; Taylor and <em>The Maudsley Deprescribing Guidelines</em> (2024). All frameworks are produced as patient education documents for healthcare provider review — they are not prescriptions and must be reviewed and approved by the client's doctor before implementation.</p>
-    <p>The supplement information in GabaDown journals is for educational purposes only and is not a substitute for professional pharmacist advice. The success stories on this website are real accounts sourced from publicly available online forums. Individual results vary significantly. GabaDown makes no guarantees about outcomes.</p>
-    <p>By engaging with GabaDown, you acknowledge that you are doing so under the care of a licensed physician and pharmacist, and that GabaDown is a support resource and not a medical provider. See our <a href="/terms.html">full terms of service</a>.</p>
-    <p>For medical emergencies, contact your local emergency services. For questions about your gabapentin prescription, contact your doctor or pharmacist directly.</p>
+  <div class="card">
+    <div class="card-eyebrow">Today's note</div>
+    <div class="field-label" style="margin-bottom:10px">Symptoms, wins, hard moments, what helped, how you feel</div>
+    <textarea id="dnote" placeholder="Even one sentence matters. Patterns only become visible when you look back..." style="min-height:120px"></textarea>
   </div>
-</section>
+  <button class="btn btn-purple" id="save-day-btn">Save today's entry</button>
+  <div class="saved-msg" id="day-msg"></div>
+</div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-logo">Gaba<span>Down</span></div>
-    <div class="footer-links">
-      <a href="mailto:hello@gabadown.com">hello@gabadown.com</a>
-      <a href="/blog/">Blog</a>
-      <a href="#apply">Get Your Journal</a>
-      <a href="/for-healthcare-providers.html">For Providers</a>
-      <a href="/terms.html">Terms of Service</a>
-      <a href="#disclaimer">Medical Disclaimer</a>
-    </div>
-    <div class="footer-copy">GabaDown is a patient advocacy resource. Not a medical service. Always reduce gabapentin under the direct supervision of your doctor and pharmacist. &copy; 2026 GabaDown. All rights reserved.</div>
+<!-- HISTORY -->
+<div id="pg-history" class="page">
+  <div id="hlist"></div>
+  <div style="margin-top:1rem;padding:1.25rem;background:var(--purple-light);border-radius:var(--radius);border:1px solid rgba(107,70,193,0.2)">
+    <p style="font-size:15px;color:#4C1D95;font-weight:700;margin-bottom:6px">Bring your journal to an appointment</p>
+    <p style="font-size:14px;color:#6D28D9;line-height:1.5">Show the History tab to your doctor on your iPad, or take screenshots. All data stays private — saved only on this device.</p>
   </div>
-</footer>
+</div>
 
+<!-- CALENDAR -->
+<div id="pg-calendar" class="page">
+
+<div class="cal-hero">
+  <div class="cal-hero-title">My reduction calendar</div>
+  <div class="cal-hero-sub">Every milestone unlocks a reward. You have earned every single one.</div>
+  <div class="cal-progress-bar"><div class="cal-progress-fill" id="cal-fill" style="width:0%"></div></div>
+  <div class="cal-progress-label" id="cal-label">Enter your current dose to see your progress</div>
+</div>
+
+<div class="card">
+  <div class="card-eyebrow">Set your starting point</div>
+  <div class="accent-purple">
+    <div class="card-title">Where are you today?</div>
+    <div class="card-sub">Enter your current dose and tap a milestone when you reach it to unlock your reward.</div>
+  </div>
+  <div class="grid2" style="margin-bottom:1rem">
+    <div><div class="field-label">Current dose (mg/day)</div><input type="number" id="cal-current" placeholder="e.g. 2700" oninput="updateCalendar()"></div>
+    <div><div class="field-label">Date I started this journey</div><input type="date" id="cal-start" oninput="updateCalendar()"></div>
+  </div>
+</div>
+
+<div class="milestone-grid" id="milestone-grid"></div>
+
+<div class="card">
+  <div class="card-eyebrow">My reward ideas</div>
+  <div class="accent-teal">
+    <div class="card-title">What I will give myself along the way</div>
+    <div class="card-sub">Add your own rewards here — things that feel meaningful and celebratory to you personally.</div>
+  </div>
+  <textarea id="my-rewards" placeholder="e.g. At 2400mg — order that art supply set I have been eyeing. At 1800mg — book a massage. At 1200mg — plan a day trip with the kids. At 540mg — book a flight somewhere..." style="min-height:130px" oninput="soulSave()"></textarea>
+</div>
+
+</div>
+
+<!-- UNLOCK MODAL -->
+<div class="unlock-modal" id="unlock-modal">
+  <div class="unlock-box">
+    <span class="unlock-emoji" id="modal-emoji">🌟</span>
+    <div class="unlock-title" id="modal-title">Milestone reached!</div>
+    <div class="unlock-dose" id="modal-dose">2,400 mg/day</div>
+    <div class="unlock-reward" id="modal-reward">You did it.</div>
+    <button class="unlock-close" id="close-unlock-btn">Claim this reward ✓</button>
+  </div>
+</div>
+<canvas class="confetti" id="confetti-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;display:none"></canvas>
+
+</div>
+<script>
+var sc={pain:null,sleep:null,mood:null,energy:null};
+var pills=[];
+var st=null;var tt=null;
+
+/* Robust storage — works on file://, Safari, and http:// */
+var _mem={};
+var Store={
+  set:function(k,v){
+    try{localStorage.setItem(k,v);}catch(e){}
+    _mem[k]=v;
+  },
+  get:function(k){
+    try{var r=localStorage.getItem(k);if(r!==null)return r;}catch(e){}
+    return (_mem[k]!==undefined)?_mem[k]:null;
+  },
+  remove:function(k){
+    try{localStorage.removeItem(k);}catch(e){}
+    delete _mem[k];
+  }
+};
+
+function go(name,btn){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('on')});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});
+  var pg=document.getElementById('pg-'+name);
+  if(pg){pg.classList.add('on');}
+  if(btn){btn.classList.add('on');}
+  if(name==='history') drawHistory();
+  if(name==='soul'||name==='morning'||name==='exercises') loadSoul();
+  if(name==='taper') loadTaper();
+  if(name==='calendar') loadCalendar();
+}
+
+function initTabs(){
+  var bar=document.getElementById('tab-bar');
+  if(!bar)return;
+  var btns=bar.querySelectorAll('.tab');
+  btns.forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.preventDefault();
+      var page=btn.getAttribute('data-page');
+      if(page) go(page,btn);
+    });
+    btn.addEventListener('touchend',function(e){
+      e.preventDefault();
+      var page=btn.getAttribute('data-page');
+      if(page) go(page,btn);
+    });
+  });
+}
+
+function initEvents(){
+  /* Event delegation — handles all taps on any device */
+  function handle(target){
+    /* Scale buttons */
+    if(target.hasAttribute('data-pick')){
+      var type=target.getAttribute('data-pick');
+      var val=parseInt(target.getAttribute('data-val'));
+      pick(type,target,val);
+      return;
+    }
+    /* Pill toggles */
+    if(target.hasAttribute('data-tog')){
+      tog(target);
+      return;
+    }
+    /* Save day */
+    if(target.id==='save-day-btn'){
+      saveDay();
+      return;
+    }
+    /* Milestone unlock */
+    if(target.hasAttribute('data-unlock')){
+      var dose=parseInt(target.getAttribute('data-unlock'));
+      var idx=parseInt(target.getAttribute('data-uidx'));
+      unlockMilestone(dose,idx);
+      return;
+    }
+    /* Close unlock modal */
+    if(target.id==='close-unlock-btn'){
+      closeUnlock();
+      return;
+    }
+  }
+
+  document.addEventListener('click',function(e){
+    var t=e.target;
+    while(t&&t!==document){
+      handle(t);
+      t=t.parentElement;
+    }
+  });
+
+  document.addEventListener('touchend',function(e){
+    var t=e.target;
+    /* Only fire if not scrolling */
+    while(t&&t!==document){
+      if(t.hasAttribute('data-pick')||t.hasAttribute('data-tog')||
+         t.id==='save-day-btn'||t.hasAttribute('data-unlock')||
+         t.id==='close-unlock-btn'){
+        e.preventDefault();
+        handle(t);
+        return;
+      }
+      t=t.parentElement;
+    }
+  });
+}
+
+function pick(type,btn,val){
+  var cls={pain:'sp',sleep:'ss',mood:'sm',energy:'se'}[type];
+  document.getElementById(type+'-s').querySelectorAll('.sb').forEach(function(b){b.classList.remove(cls)});
+  btn.classList.add(cls);sc[type]=val;
+}
+
+function tog(btn){
+  btn.classList.toggle('on');
+  var l=btn.textContent.trim();
+  var i=pills.indexOf(l);
+  if(i>-1) pills.splice(i,1); else pills.push(l);
+}
+
+function getE(){
+  try{
+    var raw=Store.get('tj_entries');
+    if(!raw||raw==='null')return[];
+    var parsed=JSON.parse(raw);
+    return Array.isArray(parsed)?parsed:[];
+  }catch(e){console.warn('getE parse error:',e);return[];}
+}
+
+function fmtDate(d){
+  if(!d) return '';
+  var p=d.split('-');
+  var m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return m[parseInt(p[1])-1]+' '+parseInt(p[2])+', '+p[0];
+}
+
+function saveDay(){
+  try{
+    var e={
+      date:document.getElementById('edate').value||new Date().toISOString().split('T')[0],
+      gaba:document.getElementById('gdose').value,gnum:document.getElementById('gnum').value,gnote:document.getElementById('gnote').value,
+      pain:sc.pain,ploc:document.getElementById('ploc').value,
+      sleep:sc.sleep,shrs:document.getElementById('shrs').value,swakes:document.getElementById('swakes').value,
+      mood:sc.mood,energy:sc.energy,
+      supps:pills.slice(),cbd:document.getElementById('cbd').value,
+      bps:document.getElementById('bps').value,bpd:document.getElementById('bpd').value,bpt:document.getElementById('bpt').value,
+      note:document.getElementById('dnote').value
+    };
+    var arr=getE();arr.unshift(e);
+    Store.set('tj_entries',JSON.stringify(arr));
+    var msg=document.getElementById('day-msg');
+    msg.style.color='var(--green)';
+    msg.textContent='Entry saved for '+fmtDate(e.date)+' ('+arr.length+' total entries)';
+    setTimeout(function(){msg.textContent=''},4000);
+    clearDay();
+  }catch(err){
+    var msg=document.getElementById('day-msg');
+    if(msg){msg.style.color='var(--red)';msg.textContent='Save failed — please try again: '+err.message;}
+    console.error('saveDay error:',err);
+  }
+}
+
+function clearDay(){
+  sc={pain:null,sleep:null,mood:null,energy:null};pills=[];
+  document.querySelectorAll('.sb').forEach(function(b){b.classList.remove('sp','ss','sm','se')});
+  document.querySelectorAll('.pill').forEach(function(b){b.classList.remove('on')});
+  ['gdose','gnum','gnote','ploc','shrs','swakes','cbd','bps','bpd','bpt','dnote'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+}
+
+function drawHistory(){
+  var list=document.getElementById('hlist');
+  var arr=getE();
+  if(!arr.length){list.innerHTML='<div class="empty">No entries yet — start with today\'s daily log.</div>';return}
+  var html='';
+  arr.forEach(function(e){
+    var b='';
+    if(e.pain!=null) b+='<span class="badge bc">Pain '+e.pain+'/10</span>';
+    if(e.sleep!=null) b+='<span class="badge bb">Sleep '+e.sleep+'/5</span>';
+    if(e.mood!=null) b+='<span class="badge bt">Mood '+e.mood+'/5</span>';
+    if(e.energy!=null) b+='<span class="badge ba">Energy '+e.energy+'/5</span>';
+    if(e.gaba) b+='<span class="badge bg">'+e.gaba+'mg</span>';
+    if(e.bps&&e.bpd) b+='<span class="badge bp">BP '+e.bps+'/'+e.bpd+'</span>';
+    var s=e.supps&&e.supps.length?'<div class="hsupps">'+e.supps.join(' · ')+'</div>':'';
+    var n=e.note?'<div class="hnote">'+e.note+'</div>':'';
+    html+='<div class="hcard"><div class="hdate">'+fmtDate(e.date)+'</div><div class="hbadges">'+b+'</div>'+s+n+'</div>';
+  });
+  list.innerHTML=html;
+}
+
+function soulSave(){
+  clearTimeout(st);
+  st=setTimeout(function(){
+    try{
+      var get=function(id){var el=document.getElementById(id);return el?el.value:''};
+      Store.set('tj_soul',JSON.stringify({
+        motivation:get('motivation'),learning:get('learning'),vision:get('vision'),
+        morning_why:get('morning-why'),ex_note:get('ex-note'),my_rewards:get('my-rewards')
+      }));
+      var m=document.getElementById('soul-msg');
+      if(m){m.style.color='var(--green)';m.textContent='Saved';setTimeout(function(){m.textContent=''},2000)}
+    }catch(err){
+      console.error('soulSave error:',err);
+      var m=document.getElementById('soul-msg');
+      if(m){m.style.color='var(--red)';m.textContent='Could not save — '+err.message;}
+    }
+  },800);
+}
+
+function loadSoul(){
+  try{
+    var raw=Store.get('tj_soul');
+    if(!raw||raw==='null')return;
+    var s=JSON.parse(raw);
+    var f=function(id,val){var el=document.getElementById(id);if(el&&val!==undefined&&val!==null)el.value=val};
+    f('motivation',s.motivation);f('learning',s.learning);f('vision',s.vision);
+    f('morning-why',s.morning_why);f('ex-note',s.ex_note);f('my-rewards',s.my_rewards);
+  }catch(e){console.warn('loadSoul error:',e);}
+}
+
+function saveTaper(){
+  clearTimeout(tt);
+  tt=setTimeout(function(){
+    var get=function(id){var el=document.getElementById(id);return el?el.value:''};
+    Store.set('tj_taper',JSON.stringify({
+      current_dose:get('current-dose'),last_drop:get('last-drop'),
+      next_drop:get('next-drop'),taper_notes:get('taper-notes')
+    }));
+    var m=document.getElementById('taper-msg');
+    if(m){m.textContent='Saved';setTimeout(function(){m.textContent=''},2000)}
+  },800);
+}
+
+function loadTaper(){
+  try{
+    var t=JSON.parse(Store.get('tj_taper')||'{}');
+    var f=function(id,val){var el=document.getElementById(id);if(el&&val)el.value=val};
+    f('current-dose',t.current_dose);f('last-drop',t.last_drop);
+    f('next-drop',t.next_drop);f('taper-notes',t.taper_notes);
+  }catch(e){}
+}
+
+document.getElementById('edate').value=new Date().toISOString().split('T')[0];
+loadSoul();
+initTabs();
+initEvents();
+
+var MILESTONES = [
+  { dose: 2700, label: "The beginning", emoji: "🌱", reward: "You made the decision. That takes more courage than people know. Today you begin.", color: "current" },
+  { dose: 2600, label: "First step taken", emoji: "👣", reward: "100mg less. Your nervous system is already beginning to adapt. Treat yourself to something beautiful — a candle, a flower, something that says 'I did something hard today.'", color: "" },
+  { dose: 2500, label: "Building momentum", emoji: "🌿", reward: "Two drops in. You are proving to yourself this is possible. This is the moment to buy those new art supplies you have been thinking about.", color: "" },
+  { dose: 2400, label: "One month strong", emoji: "🎨", reward: "You have dropped 300mg. A full month of courage. Order yourself something for your garden — seeds, a pot, something that will grow as you grow.", color: "" },
+  { dose: 2200, label: "Finding your rhythm", emoji: "🎵", reward: "500mg down. You have found a pace that works for you. Book a long phone call with one of your kids — not to talk about the taper, just to be with them.", color: "" },
+  { dose: 2000, label: "A quarter of the way", emoji: "⭐", reward: "700mg reduced — nearly a quarter of the journey done. This deserves a real celebration. A nice meal, a film you have been wanting to see, something just for you.", color: "" },
+  { dose: 1800, label: "One third free", emoji: "🌸", reward: "900mg gone. One third of the starting dose eliminated. Book that massage. You have earned it completely.", color: "" },
+  { dose: 1500, label: "Halfway through", emoji: "🏆", reward: "1,200mg down. You are HALFWAY. This is enormous. Plan a day out with your kids — lunch, a drive, whatever brings everyone together. This milestone deserves people around you.", color: "" },
+  { dose: 1200, label: "More than half free", emoji: "🦋", reward: "1,500mg reduced. More than half the starting dose gone. Time to do something creative — a painting class, a new art medium, something that celebrates the hands that have worked so hard.", color: "" },
+  { dose: 900, label: "Two thirds there", emoji: "✈️", reward: "1,800mg down. Two thirds of the way. Start planning that trip. Look at flights. Let yourself imagine being on a plane, looking out the window, going somewhere.", color: "" },
+  { dose: 600, label: "The final stretch", emoji: "🌅", reward: "2,100mg reduced. You are in the final stretch. Plan something for your garden — a raised bed, a special plant, something that will be there blooming when you reach the finish line.", color: "" },
+  { dose: 540, label: "80% reduction — GOAL REACHED", emoji: "🏡", reward: "YOU DID IT. 80% reduction achieved. This is the life you built — condo, garden, clarity, presence, freedom. You walked toward ease and peace one day at a time, and here you are. This is the moment to celebrate with everyone you love.", color: "" }
+];
+
+function updateCalendar() {
+  var cur = parseInt(document.getElementById('cal-current').value) || 2700;
+  var startEl = document.getElementById('cal-start');
+  
+  // Save to localStorage
+  Store.set('tj_cal', JSON.stringify({
+    current: document.getElementById('cal-current').value,
+    start: startEl ? startEl.value : ''
+  }));
+  
+  var start = 2700;
+  var goal = 540;
+  var pct = Math.min(100, Math.max(0, Math.round((start - cur) / (start - goal) * 100)));
+  
+  var fill = document.getElementById('cal-fill');
+  var label = document.getElementById('cal-label');
+  if (fill) fill.style.width = pct + '%';
+  if (label) label.textContent = pct + '% of the journey complete  ·  ' + (start - cur) + 'mg reduced  ·  ' + (cur - goal) + 'mg to go';
+  
+  renderMilestones(cur);
+}
+
+function renderMilestones(cur) {
+  var grid = document.getElementById('milestone-grid');
+  if (!grid) return;
+  
+  var claimed = {};
+  try { claimed = JSON.parse(Store.get('tj_claimed') || '{}'); } catch(e) {}
+  
+  var html = '';
+  MILESTONES.forEach(function(m, i) {
+    var state;
+    if (claimed[m.dose]) {
+      state = 'claimed';
+    } else if (cur <= m.dose && (i === 0 || cur > MILESTONES[i-1].dose || MILESTONES[i-1].dose === 2700)) {
+      state = cur <= m.dose ? 'unlocked' : 'locked';
+    } else if (cur <= m.dose) {
+      state = 'unlocked';
+    } else {
+      state = 'locked';
+    }
+    
+    // Determine state based on current dose vs milestone dose
+    if (m.dose === 2700) {
+      state = 'claimed'; // Starting point always claimed
+    } else if (claimed[m.dose]) {
+      state = 'claimed';
+    } else if (cur <= m.dose) {
+      state = 'unlocked';
+    } else {
+      state = 'locked';
+    }
+    
+    var badge = '';
+    if (state === 'claimed') badge = '<span class="ms-badge">Claimed</span>';
+    else if (state === 'unlocked') badge = '<span class="ms-badge">Tap to unlock</span>';
+    
+    var onclick = state === 'unlocked' ? 'data-unlock="' + m.dose + '" data-uidx="' + i + '"' : '';
+    
+    html += '<div class="ms-card ' + state + '" ' + onclick + '>';
+    html += badge;
+    html += '<span class="ms-emoji">' + m.emoji + '</span>';
+    html += '<div class="ms-dose">' + m.dose.toLocaleString() + ' mg</div>';
+    html += '<div class="ms-label">' + m.label + '</div>';
+    if (state === 'locked') {
+      html += '<div class="ms-reward">Keep going — this reward is waiting for you</div>';
+    } else {
+      html += '<div class="ms-reward">' + (state === 'claimed' ? 'Reward claimed ✓' : 'Tap to reveal your reward') + '</div>';
+    }
+    html += '</div>';
+  });
+  grid.innerHTML = html;
+}
+
+function unlockMilestone(dose, idx) {
+  var m = MILESTONES[idx];
+  var modal = document.getElementById('unlock-modal');
+  document.getElementById('modal-emoji').textContent = m.emoji;
+  document.getElementById('modal-title').textContent = m.label;
+  document.getElementById('modal-dose').textContent = dose.toLocaleString() + ' mg/day reached';
+  document.getElementById('modal-reward').textContent = m.reward;
+  modal.style.display = 'flex';
+  launchConfetti();
+  
+  // Mark as claimed
+  var claimed = {};
+  try { claimed = JSON.parse(Store.get('tj_claimed') || '{}'); } catch(e) {}
+  claimed[dose] = true;
+  Store.set('tj_claimed', JSON.stringify(claimed));
+  
+  var cur = parseInt(document.getElementById('cal-current').value) || 2700;
+  renderMilestones(cur);
+}
+
+function closeUnlock() {
+  document.getElementById('unlock-modal').style.display = 'none';
+  stopConfetti();
+}
+
+var confettiAnim = null;
+function launchConfetti() {
+  var canvas = document.getElementById('confetti-canvas');
+  if (!canvas) return;
+  canvas.style.display = 'block';
+  var ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  
+  var pieces = [];
+  var colors = ['#9F7AEA','#2DD4BF','#F0E6FF','#9AE6B4','#FBB6CE','#76E4F7','#EF9F27'];
+  for (var i = 0; i < 120; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      w: Math.random() * 10 + 5,
+      h: Math.random() * 6 + 3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rot: Math.random() * 360,
+      vx: (Math.random() - 0.5) * 3,
+      vy: Math.random() * 4 + 2,
+      vr: (Math.random() - 0.5) * 6
+    });
+  }
+  
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(function(p) {
+      ctx.save();
+      ctx.translate(p.x + p.w/2, p.y + p.h/2);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+      p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+    });
+    pieces = pieces.filter(function(p){ return p.y < canvas.height + 20; });
+    if (pieces.length > 0) confettiAnim = requestAnimationFrame(draw);
+    else { canvas.style.display = 'none'; ctx.clearRect(0,0,canvas.width,canvas.height); }
+  }
+  confettiAnim = requestAnimationFrame(draw);
+}
+
+function stopConfetti() {
+  if (confettiAnim) cancelAnimationFrame(confettiAnim);
+  var canvas = document.getElementById('confetti-canvas');
+  if (canvas) { canvas.style.display = 'none'; }
+}
+
+function loadCalendar() {
+  try {
+    var c = JSON.parse(Store.get('tj_cal') || '{}');
+    var ce = document.getElementById('cal-current');
+    var se = document.getElementById('cal-start');
+    if (ce && c.current) ce.value = c.current;
+    if (se && c.start) se.value = c.start;
+    updateCalendar();
+  } catch(e) {
+    renderMilestones(2700);
+  }
+  // Load reward ideas
+  try {
+    var soul = JSON.parse(Store.get('tj_soul') || '{}');
+    var rw = document.getElementById('my-rewards');
+    if (rw && soul.my_rewards) rw.value = soul.my_rewards;
+  } catch(e) {}
+}
+
+</script>
 </body>
 </html>
