@@ -950,6 +950,11 @@ input:focus{outline:none;border-color:var(--purple);background:#fff}
     <p style="font-size:14px;color:#6D28D9;line-height:1.5">Show the History tab to your doctor on your device, or download a printable copy below. All data stays private — saved only on this device unless you download or back it up.</p>
   </div>
 
+  <div id="tj-export-banner" style="display:none;align-items:center;justify-content:space-between;gap:12px;margin-top:1rem;padding:1rem 1.25rem;background:#FFFBEB;border:1px solid #FDE68A;border-radius:var(--radius)">
+    <span class="tj-banner-text" style="font-size:13.5px;color:#92400E;line-height:1.5"></span>
+    <button class="btn btn-purple" style="width:auto;padding:8px 16px;white-space:nowrap" onclick="exportPrintable()">Download now</button>
+  </div>
+
   <div class="card" style="margin-top:1rem">
     <div class="card-eyebrow">Save your records</div>
     <div class="accent-purple">
@@ -1014,6 +1019,11 @@ input:focus{outline:none;border-color:var(--purple);background:#fff}
 <canvas class="confetti" id="confetti-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;display:none"></canvas>
 
 </div>
+<!-- Self-hosted, not a CDN — no external dependency, works fully offline -->
+<script src="firebase-sdk.bundle.js"></script>
+<script src="taper-journal-cloud.js"></script>
+<script src="jspdf.umd.min.js"></script>
+<script src="taper-journal-core.js"></script>
 <script>
 /* ============ PRIVATE ACCESS GATE ============ */
 /* Natalie: change the word below to set the journal password, then tell your mom */
@@ -1081,40 +1091,21 @@ function exportPrintable(){
   var taper = JSON.parse(Store.get('tj_taper') || '{}');
   var cal = JSON.parse(Store.get('tj_cal') || '{}');
   var entries = getE();
-  var lines = [];
-  lines.push('MY TAPER JOURNAL — printable record');
-  lines.push('Downloaded ' + new Date().toLocaleDateString());
-  lines.push('='.repeat(50));
-  lines.push('');
-  lines.push('CURRENT STATUS');
-  lines.push('Current dose: ' + (cal.current || taper.current_dose || 'not set') + ' mg/day');
-  lines.push('Started at: ' + (cal.start || 'not set'));
-  lines.push('Last reduction: ' + (taper.last_drop || 'not set'));
-  lines.push('Next planned drop: ' + (taper.next_drop || 'not set'));
-  lines.push('');
-  lines.push('MY WHY');
-  lines.push('Motivation: ' + (soul.motivation || ''));
-  lines.push('What I\'m learning: ' + (soul.learning || ''));
-  lines.push('Vision: ' + (soul.vision || ''));
-  lines.push('');
-  lines.push('='.repeat(50));
-  lines.push('DAILY LOG HISTORY (' + entries.length + ' entries)');
-  lines.push('='.repeat(50));
-  entries.forEach(function(e){
-    lines.push('');
-    lines.push(fmtDate(e.date));
-    lines.push('  Gabapentin: ' + (e.gaba || '—') + 'mg across ' + (e.gnum || '—') + ' doses' + (e.gnote ? ' — ' + e.gnote : ''));
-    lines.push('  Pain: ' + (e.pain != null ? e.pain + '/10' : '—') + (e.ploc ? ' (' + e.ploc + ')' : ''));
-    lines.push('  Sleep: ' + (e.sleep != null ? e.sleep + '/5' : '—') + (e.shrs ? ', ' + e.shrs + 'h' : '') + (e.swakes ? ', woke ' + e.swakes + 'x' : ''));
-    lines.push('  Mood: ' + (e.mood != null ? e.mood + '/5' : '—') + '  Energy: ' + (e.energy != null ? e.energy + '/5' : '—'));
-    if(e.supps && e.supps.length) lines.push('  Supplements: ' + e.supps.join(', '));
-    if(e.bps && e.bpd) lines.push('  Blood pressure: ' + e.bps + '/' + e.bpd + (e.bpt ? ' at ' + e.bpt : ''));
-    if(e.note) lines.push('  Note: ' + e.note);
-  });
-  var name = 'my-taper-journal-' + new Date().toISOString().split('T')[0] + '.txt';
-  downloadFile(name, lines.join('\n'), 'text/plain');
   var msg = document.getElementById('export-msg');
-  if(msg){ msg.textContent = 'Printable record downloaded — good for doctor visits or safekeeping.'; setTimeout(function(){msg.textContent='';}, 5000); }
+
+  tjExportPDF({
+    generatedDate: new Date().toLocaleDateString(),
+    entryCount: entries.length,
+    current: (cal.current || taper.current_dose || 'not set') + ' mg/day',
+    start: cal.start || 'not set',
+    lastDrop: taper.last_drop || 'not set',
+    nextDrop: taper.next_drop || 'not set',
+    entries: entries,
+    fmtDate: fmtDate
+  });
+
+  if(msg){ msg.textContent = 'PDF downloaded — good for doctor visits or safekeeping.'; setTimeout(function(){msg.textContent='';}, 5000); }
+  tjCheckExportFreshness('tj-export-banner');
 }
 
 function importBackup(input){
@@ -1144,22 +1135,23 @@ var sc={pain:null,sleep:null,mood:null,energy:null};
 var pills=[];
 var st=null;var tt=null;
 
-/* Robust storage — works on file://, Safari, and http:// */
-var _mem={};
-var Store={
-  set:function(k,v){
-    try{localStorage.setItem(k,v);}catch(e){}
-    _mem[k]=v;
-  },
-  get:function(k){
-    try{var r=localStorage.getItem(k);if(r!==null)return r;}catch(e){}
-    return (_mem[k]!==undefined)?_mem[k]:null;
-  },
-  remove:function(k){
-    try{localStorage.removeItem(k);}catch(e){}
-    delete _mem[k];
-  }
-};
+/* Store is now defined in taper-journal-core.js (dual-write: localStorage + IndexedDB),
+   with Firestore as a third, cloud-backed tier via TJCloud (taper-journal-cloud.js).
+   One shared project serves every customer; each browser gets its own anonymous
+   uid, and Firestore security rules keep every customer's data isolated. */
+TJCloud.init({
+  apiKey: "AIzaSyDasR7hghvvdUuRZNfbtu1JKcuSgNBzVSE",
+  authDomain: "gabadown-journals.firebaseapp.com",
+  projectId: "gabadown-journals",
+  storageBucket: "gabadown-journals.firebasestorage.app",
+  messagingSenderId: "270250948822",
+  appId: "1:270250948822:web:c453acf0853e5e8156f177"
+});
+Store.reconcileOnLoad(['tj_entries','tj_soul','tj_taper','tj_cal','tj_claimed']);
+document.addEventListener('tj-restored', function(e){
+  console.log('Restored from backup copy:', e.detail.key);
+  try{ drawHistory(); loadSoul(); loadTaper(); }catch(err){}
+});
 
 function go(name,btn){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('on')});
@@ -1297,6 +1289,7 @@ function saveDay(){
     msg.textContent='Entry saved for '+fmtDate(e.date)+' ('+arr.length+' total entries)';
     setTimeout(function(){msg.textContent=''},4000);
     clearDay();
+    tjCheckExportFreshness('tj-export-banner');
   }catch(err){
     var msg=document.getElementById('day-msg');
     if(msg){msg.style.color='var(--red)';msg.textContent='Save failed — please try again: '+err.message;}
@@ -1387,6 +1380,7 @@ document.getElementById('edate').value=new Date().toISOString().split('T')[0];
 loadSoul();
 initTabs();
 initEvents();
+tjCheckExportFreshness('tj-export-banner');
 
 var MILESTONES = [
   { dose: 2700, label: "The beginning", emoji: "🌱", reward: "You made the decision. That takes more courage than people know. Today you begin.", color: "current" },
